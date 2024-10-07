@@ -137,6 +137,10 @@ namespace LETHIMCOOK
             _camera.LookAt(_bgPosition + _cameraPosition);//******//
             _cameraPosition += move;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public float GetCameraPosX()
         {
             return _cameraPosition.X;
