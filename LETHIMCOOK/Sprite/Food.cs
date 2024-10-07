@@ -27,9 +27,11 @@ namespace LETHIMCOOK.Sprite
         public RectangleF Bounds;
         AnimatedTexture SpriteTexture;
         Vector2 playerPos;
+        string name;
 
-        public Food(Texture2D foodTexture, Vector2 foodPosition)
+        public Food(string name,Texture2D foodTexture, Vector2 foodPosition)
         {
+            this.name = name;
             this.foodTexture = foodTexture;
             this.foodPosition = foodPosition;
             foodBox = new RectangleF((int)foodPosition.X, (int)foodPosition.Y, 50, 50);

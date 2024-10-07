@@ -29,9 +29,8 @@ namespace LETHIMCOOK.Sprite
         private double lastHitTime = 0;
         int countDamage;
         int enemyHp = 3;
-        public RectangleF foodBox;
 
-        public Enemy(Texture2D enemytex, Vector2 enemyPosition) : base(enemytex, enemyPosition)
+        public Enemy(string name,Texture2D enemytex, Vector2 enemyPosition) : base(name,enemytex, enemyPosition)
         {
             texture = enemytex;
             this.enemyPosition = enemyPosition;
