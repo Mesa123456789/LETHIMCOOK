@@ -72,7 +72,7 @@ namespace LETHIMCOOK.Screen
             Game1.enemyList.Add(new Enemy("slime",slime, rainbowsmilemeat,new Vector2(380 + 100, 330)));
             Game1.enemyList.Add(new Enemy("icebear", icebear, wipcream, new Vector2(230 + 100, 260)));
             //Game1.enemyList.Add(new Enemy("jellyfish", jellyfish, new Vector2(300, 200)));
-            enemy = new Enemy("enemy",enemytex, enemytexbag,Vector2.Zero);
+            //enemy = new Enemy("enemy",enemytex, enemytexbag,Vector2.Zero);
             //Game1.foodList.Add(new Food(foodTex9, new Vector2(100, 200)));
             //Game1.enemyList.Add(new Enemy(foodTex10, new Vector2(100, 250)));
             //Game1.enemyList.Add(new Enemy(foodTex11, new Vector2(150, 280)));

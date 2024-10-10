@@ -59,8 +59,17 @@ namespace LETHIMCOOK.Sprite
                     OnCollision();
                 }
             }
+            if (foodBox.Intersects(SeaScreen.player.Bounds) && !isHit)
+            {
+                Game1.currentHeart -= 10;
+                isHit = true;
+                if (mouseSt.LeftButton == ButtonState.Pressed && foodBox.Intersects(SeaScreen.player.Bounds))
+                {
+                    // isCheck = true;
+                    OnCollision();
+                }
+            }
 
-  
 
             if (isHit == true)
             {

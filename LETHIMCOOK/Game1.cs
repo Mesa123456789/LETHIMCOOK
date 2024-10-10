@@ -50,8 +50,8 @@ namespace LETHIMCOOK
         public static List<Food> BagList = new List<Food>();
         public static List<Food> foodList = new();
         public static List<Enemy> enemyList = new();
-        public static List<Food> CraftList = new List<Food>();
-        
+        public static List<Fish> BigFishList = new();
+        public static List<Fish> SmallFishList = new();
 
         public Game1()
         {
@@ -207,12 +207,6 @@ namespace LETHIMCOOK
             for (int i = 0; i < Game1.BagList.Count; i++)
             {
                 Game1.BagList[i].Update(gameTime);
-                if (mouseRec.Intersects(Game1.BagList[i].foodBox) && ms.LeftButton == ButtonState.Pressed && Ontable)
-                {
-                    Game1.CraftList.Add(Game1.BagList[i]);
-                    Game1.BagList.RemoveAt(i);
-                    break;
-                }
             }
             if (player.Bounds.Intersects(sendMenu))
             {
@@ -244,9 +238,9 @@ namespace LETHIMCOOK
                 _spriteBatch.Draw(inventory, new Vector2(129, 220), Color.White);
                 if (!GotMenu)
                 {
-                    for (int i = 0; i < Game1.CraftList.Count; i++)
+                    for (int i = 0; i < Craft.CraftList.Count; i++)
                     {
-                        _spriteBatch.Draw(Game1.CraftList[i].foodTexBag, new Vector2(285 + i * 68, 98), new Rectangle(0, 0, 32, 32), Color.White);
+                        _spriteBatch.Draw(Craft.CraftList[i].foodTexBag, new Vector2(285 + i * 68, 98), new Rectangle(0, 0, 32, 32), Color.White);
                     }
                 }
                 for (int i = 0; i < Game1.BagList.Count; i++)
@@ -365,7 +359,8 @@ namespace LETHIMCOOK
                     for (int i = 0; i < BagList.Count; i++)
                     {
                         _spriteBatch.Draw(popup, new Vector2(635, 170), Color.White);
-                        _spriteBatch.Draw(BagList[i].foodTexBag, new Rectangle(653, 180, 32,32), new Rectangle(0,0,32,32), Color.White);
+                        Console.WriteLine(BagList[i].foodTexBag.ToString());
+                        //_spriteBatch.Draw(BagList[i].foodTexBag, new Rectangle(653, 180, 32,32), new Rectangle(0,0,32,32), Color.White);
                     }
                     CountTime(250);
                 }

@@ -11,7 +11,7 @@ namespace LETHIMCOOK.Sprite
     public class Fish : Food
     {
         Vector2 fishPos;
-        Texture2D fishTexBag;
+        Texture2D fishBag;
         string name;
         Texture2D fishTex;
 
@@ -24,7 +24,7 @@ namespace LETHIMCOOK.Sprite
             this.name = name;
             this.fishTex = fishTex;
             this.fishPos = fishPos;
-            this.fishTexBag = fishTexBag;
+            fishBag = fishTexBag;
 
             //framePerSec = 7;
             //timePerFream = (float)1 / framePerSec;
@@ -78,7 +78,7 @@ namespace LETHIMCOOK.Sprite
         }
         public override void DrawBag(SpriteBatch batch)
         {
-            batch.Draw(fishTexBag, fishPos, new Rectangle(0, 0, 32, 32), Color.White);
+            batch.Draw(fishBag, fishPos, new Rectangle(0, 0, 32, 32), Color.White);
         }
     }
 }
