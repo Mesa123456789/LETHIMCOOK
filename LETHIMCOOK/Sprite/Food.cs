@@ -20,6 +20,7 @@ namespace LETHIMCOOK.Sprite
         public Vector2 foodPosition;
         public RectangleF foodBox;
         public Texture2D foodTexture;
+        public Texture2D foodTexBag;
         public int getFood;
         public static bool OntableAble;
         public Player player;
@@ -29,10 +30,11 @@ namespace LETHIMCOOK.Sprite
         Vector2 playerPos;
         string name;
 
-        public Food(string name,Texture2D foodTexture, Vector2 foodPosition)
+        public Food(string name,Texture2D foodTexture, Texture2D foodTexBag ,Vector2 foodPosition)
         {
             this.name = name;
             this.foodTexture = foodTexture;
+            this.foodTexBag = foodTexBag;
             this.foodPosition = foodPosition;
             foodBox = new RectangleF((int)foodPosition.X, (int)foodPosition.Y, 50, 50);
             OntableAble = false;
@@ -56,6 +58,10 @@ namespace LETHIMCOOK.Sprite
         public override void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.Draw(foodTexture, foodPosition, Color.White);
+        }
+        public override void DrawBag(SpriteBatch _spriteBatch)
+        {
+            _spriteBatch.Draw(foodTexBag, foodPosition, Color.White);
         }
         public virtual void OnCollision()
         {

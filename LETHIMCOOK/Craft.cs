@@ -16,16 +16,16 @@ namespace LETHIMCOOK
         public static void Load(ContentManager content, string asset)
         {
            Uni = content.Load<Texture2D>("Uni");
-           Recipe.Add("chicken" + "crab",new Food("Uni",Uni,Vector2.Zero));
+           //Recipe.Add("chicken" + "crab",new Food("Uni",Uni,Vector2.Zero));
         }
         public void DrawMenu(SpriteBatch spriteBatch)
         {
             foreach (var item in Game1.BagList)
             {
-                if (item == "chicken" + "crab")
-                {
-                    Recipe["chicken" + "crab"].Draw(spriteBatch);
-                }
+                //if (item == food[1])
+                //{
+                //    Recipe["chicken" + "crab"].Draw(spriteBatch);
+                //}
             }
         }
     }

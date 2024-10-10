@@ -136,16 +136,16 @@ namespace LETHIMCOOK.Screen
             //{
             //    Crafting = false;
             //}
-            //for (int i = 0; i < Game1.BagList.Count; i++)
-            //{
-            //    Game1.BagList[i].Update(theTime);
-            //    if (mouseBox.Intersects(Game1.BagList[i].foodBox) && ms.LeftButton == ButtonState.Pressed && Ontable)
-            //    {
-            //        Game1.CraftList.Add(Game1.BagList[i]);
-            //        Game1.BagList.RemoveAt(i);
-            //        break;
-            //    }
-            //}
+            for (int i = 0; i < Game1.BagList.Count; i++)
+            {
+                Game1.BagList[i].Update(theTime);
+                //if (mouseBox.Intersects(Game1.BagList[i].foodBox) && ms.LeftButton == ButtonState.Pressed && Ontable)
+                //{
+                //    Game1.CraftList.Add(Game1.BagList[i]);
+                //    Game1.BagList.RemoveAt(i);
+                //    break;
+                //}
+            }
             if (player.Bounds.Intersects(sendMenu))
             {
                 IssendMenuInterect = true;

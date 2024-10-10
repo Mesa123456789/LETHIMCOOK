@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LETHIMCOOK.Screen;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -174,6 +175,7 @@ namespace LETHIMCOOK.Sprite
 
         public void Draw(SpriteBatch _spriteBatch)
         {
+           
             if (IsMove == true)
             {
                 SpriteTexture.DrawFrame(_spriteBatch, new Vector2((int)((RectangleF)Bounds).X + 10, (int)((RectangleF)Bounds).Y +  32), (int)direction + 1);
@@ -183,14 +185,15 @@ namespace LETHIMCOOK.Sprite
                 SpriteTextureIdel.DrawFrame(_spriteBatch, new Vector2((int)((RectangleF)Bounds).X + 10 , (int)((RectangleF)Bounds).Y + 32), (int)direction + 1);
             }
 
-            if (state == 1 && isAttack == true)
+
+            if (state == 1 && isAttack == true && !SeaScreen._isFishing)
             {
                 _spriteBatch.Draw(effect, new Vector2(Bounds.Position.X , Bounds.Position.Y + 15), new Rectangle(0, 0, 48, 48), Color.White, rotation, new Vector2(24, 24), 2.0f, SpriteEffects.FlipVertically, 0.0f);
                 _spriteBatch.Draw(sword, new Vector2(Bounds.Position.X, Bounds.Position.Y + 15), new Rectangle(0, 0, 48, 48), Color.White, rotation, new Vector2(24, 24), 2.0f, SpriteEffects.None, 0.0f);
             }
 
             //Attack 2
-            if (state == 2 && isAttack == true)
+            if (state == 2 && isAttack == true && !SeaScreen._isFishing)
             {
                 postrotation = rotation;
                 _spriteBatch.Draw(effect, new Vector2(Bounds.Position.X, Bounds.Position.Y + 15), new Rectangle(0, 0, 48, 48), Color.White, rotation, new Vector2(24, 24), 2.0f, SpriteEffects.None, 0.0f);
@@ -198,7 +201,7 @@ namespace LETHIMCOOK.Sprite
             }
 
             //Attack 3
-            if (state == 3 && isAttack == true)
+            if (state == 3 && isAttack == true && !SeaScreen._isFishing)
             {
                 postrotation = rotation;
                 _spriteBatch.Draw(effect, new Vector2(Bounds.Position.X, Bounds.Position.Y + 15), new Rectangle(0, 0, 48, 48), Color.White, rotation, new Vector2(24, 24), 2.0f, SpriteEffects.None, 0.0f);

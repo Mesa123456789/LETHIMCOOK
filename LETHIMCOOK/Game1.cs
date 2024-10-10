@@ -51,6 +51,8 @@ namespace LETHIMCOOK
         public static List<Food> foodList = new();
         public static List<Enemy> enemyList = new();
         public static List<Food> CraftList = new List<Food>();
+        
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -98,7 +100,7 @@ namespace LETHIMCOOK
             CandyScreen = new CandyScreen(this, new EventHandler(GameplayScreenEvent));
             SeaScreen = new SeaScreen(this, new EventHandler(GameplayScreenEvent));
             GameplayScreen = new GameplayScreen(this, new EventHandler(GameplayScreenEvent));
-            mCurrentScreen = GameplayScreen;
+            mCurrentScreen = SeaScreen;
             currentHeart = CandyScreen.uiHeart.Width - 10;
         }
         public RectangleF bookRec;
@@ -244,12 +246,12 @@ namespace LETHIMCOOK
                 {
                     for (int i = 0; i < Game1.CraftList.Count; i++)
                     {
-                        _spriteBatch.Draw(Game1.CraftList[i].foodTexture, new Vector2(285 + i * 68, 98), new Rectangle(0, 0, 32, 32), Color.White);
+                        _spriteBatch.Draw(Game1.CraftList[i].foodTexBag, new Vector2(285 + i * 68, 98), new Rectangle(0, 0, 32, 32), Color.White);
                     }
                 }
                 for (int i = 0; i < Game1.BagList.Count; i++)
                 {
-                    _spriteBatch.Draw(Game1.BagList[i].foodTexture, new Vector2(160 + i * 52, 250), new Rectangle(0, 0, 32, 32), Color.White);
+                    _spriteBatch.Draw(Game1.BagList[i].foodTexBag, new Vector2(160 + i * 52, 250), new Rectangle(0, 0, 32, 32), Color.White);
                 }
             }
 
@@ -342,6 +344,7 @@ namespace LETHIMCOOK
             if (currentHeart < 60) { color = Color.Red; }
             else { color = Color.White; }
 
+
         }
 
         Color color = Color.White;
@@ -354,6 +357,7 @@ namespace LETHIMCOOK
         int mouse_state = 1;
         public void DrawUiGameplay(SpriteBatch _spriteBatch)
         {
+            
             foreach (Food food in BagList)
             {
                 if (IsPopUp == true)
@@ -361,9 +365,9 @@ namespace LETHIMCOOK
                     for (int i = 0; i < BagList.Count; i++)
                     {
                         _spriteBatch.Draw(popup, new Vector2(635, 170), Color.White);
-                        _spriteBatch.Draw(BagList[i].foodTexture, new Vector2(653, 180),new Rectangle(0, 0, 32,32), Color.White);
+                        _spriteBatch.Draw(BagList[i].foodTexBag, new Rectangle(653, 180, 32,32), new Rectangle(0,0,32,32), Color.White);
                     }
-                    CountTime(100);
+                    CountTime(250);
                 }
             }
             if (openQuestUI == true)
@@ -395,7 +399,7 @@ namespace LETHIMCOOK
                 _spriteBatch.Draw(inventory, new Vector2(123, 125), Color.White);
                 for (int i = 0; i < BagList.Count; i++)
                 {
-                    _spriteBatch.Draw(BagList[i].foodTexture, new Vector2(153 + i * 53, 156),new Rectangle(0, 0, 32, 32), Color.White);
+                    _spriteBatch.Draw(BagList[i].foodTexBag,new Rectangle(153 + i * 53, 156, 32, 32), new Rectangle(0, 0, 32, 32), Color.White);
                 }
                 if (closeXBox == false)
                 {

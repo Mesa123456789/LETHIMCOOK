@@ -24,15 +24,10 @@ namespace LETHIMCOOK.Sprite
         {
 
         }
-        public virtual void PlayerDraw(SpriteBatch _spriteBatch, Vector2 offset)
+        public virtual void DrawBag(SpriteBatch _spriteBatch)
         {
-            Rectangle dest = new(
-                drect.X + (int)offset.X,
-                drect.Y + (int)offset.Y,
-                drect.Width,
-                drect.Height
 
-                );
         }
+
     }
 }

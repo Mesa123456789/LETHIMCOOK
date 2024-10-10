@@ -24,15 +24,17 @@ namespace LETHIMCOOK.Sprite
         public float timePerFream;
         bool isHit;
         Texture2D texture;
+        Texture2D enemyTexbag;
         public Vector2 enemyPosition;
         private double hitCooldown = 2.0; // Cooldown period in seconds
         private double lastHitTime = 0;
         int countDamage;
         int enemyHp = 3;
 
-        public Enemy(string name,Texture2D enemytex, Vector2 enemyPosition) : base(name,enemytex, enemyPosition)
+        public Enemy(string name,Texture2D enemytex, Texture2D enemyTexbag, Vector2 enemyPosition) : base(name,enemytex, enemyTexbag, enemyPosition)
         {
             texture = enemytex;
+            this.enemyTexbag = enemyTexbag;
             this.enemyPosition = enemyPosition;
             framePerSec = 7;
             timePerFream = (float)1 / framePerSec;
@@ -45,7 +47,7 @@ namespace LETHIMCOOK.Sprite
         RectangleF mouseCheck; 
         public override void Update(GameTime gameTime)
         {
-
+            ///แยกเมธอดแต่ละscreen
             MouseState mouseSt = Mouse.GetState();
             if (foodBox.Intersects(GameplayScreen.player.Bounds) && !isHit)
             {
@@ -79,12 +81,10 @@ namespace LETHIMCOOK.Sprite
         public override void Draw(SpriteBatch batch)
         {
             batch.Draw(texture,enemyPosition, new Rectangle(32 * frame, 0, 32, 32), Color.White, 0.0f, new Vector2(16, 16), 2.0f, SpriteEffects.None, 0.0f);
-            //if (isCheck == true)
-            //{
-            //    batch.Draw(texture, enemyPosition, new Rectangle(32 * frame, 0, 32, 32), Color.Red, 0.0f, new Vector2(16, 16), 2.0f, SpriteEffects.None, 0.0f);
-            //    CountTime(50);
-            //}
-
+        }
+        public override void DrawBag(SpriteBatch batch)
+        {
+            batch.Draw(enemyTexbag, enemyPosition, new Rectangle(0, 0, 32, 32), Color.White);
         }
 
         public override void OnCollision()
