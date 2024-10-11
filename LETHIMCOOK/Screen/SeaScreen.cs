@@ -69,7 +69,7 @@ namespace LETHIMCOOK.Screen
             BigFishList.Add(new Fish("sharkmeat", _fish, sharkmeat, fishPos));
             SmallFishList.Add(new Fish("shimpmeat", _fish, shimpmeat, fishPos));
             SmallFishList.Add(new Fish("unimeat", _fish, unimeat, fishPos));
-            fish = new Fish(name, fishTex, sharkmeat, Vector2.Zero);
+
             var viewportadapter = new BoxingViewportAdapter(game.Window, game.GraphicsDevice, 800, 450);
             Game1._camera = new OrthographicCamera(viewportadapter);//******//
             game._bgPosition = new Vector2(400, 225);//******//
@@ -179,18 +179,23 @@ namespace LETHIMCOOK.Screen
                 if (_elapsedTime >= _fishCatchTime)
                 {
                     _isFishing = false;
-                    fish.OnCollision();
                     bool isBigFish = _random.Next(0, 2) == 0; 
                     if (isBigFish)
                     {
                         int bigFishIndex = _random.Next(0,BigFishList.Count);
                         var caughtFish = BigFishList[bigFishIndex];
+                        Food.OntableAble = true;
+                        Game1.BagList.Add(caughtFish);
+                        Game1.IsPopUp = true;
                         Console.WriteLine("Big Fish Caught!");
                     }
                     else
                     {
                         int smallFishIndex = _random.Next(0,SmallFishList.Count);
                         var caughtFish = SmallFishList[smallFishIndex];
+                        Food.OntableAble = true;
+                        Game1.BagList.Add(caughtFish);
+                        Game1.IsPopUp = true;
                         Console.WriteLine("Small Fish Caught!");
                     }
                     getfish = true;

@@ -51,6 +51,10 @@ namespace LETHIMCOOK
         public static List<Food> foodList = new();
         public static List<Enemy> enemyList = new();
         public static List<Food> CraftList = new List<Food>();
+        public static Texture2D Uni;
+        public static List<Food> ingredentList = new List<Food>();
+
+        Craft _craft = new Craft();
         
 
         public Game1()
@@ -93,6 +97,7 @@ namespace LETHIMCOOK
             inventory = Content.Load<Texture2D>("inventory");
             popup = Content.Load<Texture2D>("popup");
             craft = Content.Load<Texture2D>("craft");
+            Uni = Content.Load<Texture2D>("Uni");
 
             ///***///
             TitleScreen = new TitleScreen(this, new EventHandler(GameplayScreenEvent));
@@ -100,7 +105,7 @@ namespace LETHIMCOOK
             CandyScreen = new CandyScreen(this, new EventHandler(GameplayScreenEvent));
             SeaScreen = new SeaScreen(this, new EventHandler(GameplayScreenEvent));
             GameplayScreen = new GameplayScreen(this, new EventHandler(GameplayScreenEvent));
-            mCurrentScreen = SeaScreen;
+            mCurrentScreen = GameplayScreen;
             currentHeart = CandyScreen.uiHeart.Width - 10;
         }
         public RectangleF bookRec;
@@ -139,10 +144,6 @@ namespace LETHIMCOOK
             _camera.LookAt(_bgPosition + _cameraPosition);//******//
             _cameraPosition += move;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public float GetCameraPosX()
         {
             return _cameraPosition.X;
@@ -166,6 +167,8 @@ namespace LETHIMCOOK
         int MenuPopup;
         bool IsFrigeInterect = false;
         bool sendingMenu = false;
+        bool getUni;
+        Rectangle craftBox;
         public void UpdateUIRest(Player player , GameTime gameTime)
         {
             MouseState ms = Mouse.GetState();
@@ -174,6 +177,9 @@ namespace LETHIMCOOK
             RectangleF tableBox = new RectangleF(450, 150, 130, 20);
             RectangleF sendMenu = new RectangleF(600, 240, 40, 30);
             RectangleF equal = new RectangleF(345, 140, 120, 50);
+            craftBox = new Rectangle(335, 140, 140, 50);
+            Rectangle invent1 = new Rectangle(158, 250, 35, 35);
+            Rectangle invent2 = new Rectangle(210, 250, 35, 35);
             if (player.Bounds.Intersects(FrigeRec))
             {
                 IsFrigeInterect = true;
@@ -196,24 +202,51 @@ namespace LETHIMCOOK
                 IsInterect = false;
                 Ontable = false;
             }
-            if (player.Bounds.Intersects(equal) && Ontable)
+            // Rectangle foodRec = new Rectangle((int)foodPosition.X,
+            for (int i = 0; i < BagList.Count; i++)
             {
-                Crafting = true;
-            }
-            else
-            {
-                Crafting = false;
-            }
-            for (int i = 0; i < Game1.BagList.Count; i++)
-            {
-                Game1.BagList[i].Update(gameTime);
-                if (mouseRec.Intersects(Game1.BagList[i].foodBox) && ms.LeftButton == ButtonState.Pressed && Ontable)
+                BagList[i].Update(gameTime);
+                foreach(Food food in BagList)
                 {
-                    Game1.CraftList.Add(Game1.BagList[i]);
-                    Game1.BagList.RemoveAt(i);
+                    if (mouseRec.Intersects(BagList[i].foodBox) && ms.LeftButton == ButtonState.Pressed && Ontable)
+                    {
+                        Console.WriteLine("intersect!");
+                        CraftList.Add(BagList[i]);
+                        BagList.RemoveAt(i);  
+                    }
                     break;
                 }
+
             }
+
+            ///
+
+
+            if (ms.LeftButton == ButtonState.Pressed && mouseRec.Intersects(craftBox))
+            {
+                craftBox.X += 10;
+                for (int i = 0; i < ingredentList.Count; i++)
+                {
+                    for (int j = 0; j < CraftList.Count; j++)
+                    {
+                        if (ingredentList[i].name == CraftList[j].name)
+                        {
+                            ingredentList[i].istrue = true;
+                            Console.WriteLine("carft");
+                        }
+                        //else
+                        //{
+                        //    ingredentList[i].istrue = false;
+                        //}
+                    }
+                }
+                if (ingredentList[0].istrue == true && ingredentList[1].istrue == true)
+                {
+                    Console.WriteLine("getfood");
+                    getUni = true;
+                }
+            }
+
             if (player.Bounds.Intersects(sendMenu))
             {
                 IssendMenuInterect = true;
@@ -234,6 +267,10 @@ namespace LETHIMCOOK
             //{
             //    _spriteBatch.Draw(uni, new Rectangle((int)player.CharPosition.X, (int)player.CharPosition.Y + 13, 32, 32), Color.White);
             //}
+            if(getUni == true)
+            {
+                _spriteBatch.Draw(Uni, new Rectangle(0,0, 200,200), Color.White);
+            }
             if (openFridgeUI == true)
             {
                 _spriteBatch.Draw(FridgeUi, new Vector2(0, 0), Color.White);
@@ -242,16 +279,23 @@ namespace LETHIMCOOK
             {
                 _spriteBatch.Draw(craft, new Vector2(215, 60), Color.White);
                 _spriteBatch.Draw(inventory, new Vector2(129, 220), Color.White);
-                if (!GotMenu)
+                _spriteBatch.Draw(popup, craftBox, Color.White);
+                _spriteBatch.Draw(popup, new Rectangle(158,250, 30,30), Color.White);
+                _spriteBatch.Draw(popup, new Rectangle(210, 250, 30, 30), Color.White);
+                //if (!GotMenu)
+                //{
+                //    for (int i = 0; i < Game1.CraftList.Count; i++)
+                //    {
+                //        _spriteBatch.Draw(Game1.CraftList[i].foodTexBag, new Vector2(285 + i * 68, 98), new Rectangle(0, 0, 32, 32), Color.White);
+                //    }
+                //}
+                for (int i = 0; i < CraftList.Count; i++)
                 {
-                    for (int i = 0; i < Game1.CraftList.Count; i++)
-                    {
-                        _spriteBatch.Draw(Game1.CraftList[i].foodTexBag, new Vector2(285 + i * 68, 98), new Rectangle(0, 0, 32, 32), Color.White);
-                    }
+                    _spriteBatch.Draw(CraftList[i].foodTexBag, new Vector2(285 + i * 68, 98), new Rectangle(0, 0, 32, 32), Color.White);
                 }
-                for (int i = 0; i < Game1.BagList.Count; i++)
+                for (int i = 0; i < BagList.Count; i++)
                 {
-                    _spriteBatch.Draw(Game1.BagList[i].foodTexBag, new Vector2(160 + i * 52, 250), new Rectangle(0, 0, 32, 32), Color.White);
+                    _spriteBatch.Draw(BagList[i].foodTexBag, new Vector2(160 + i * 52, 250), new Rectangle(0,0, 32, 32), Color.White);
                 }
             }
 
@@ -432,6 +476,25 @@ new Rectangle(0, 0, currentHeart + 10, 18), color);
 
         }
 
+        public void OnCraftBox()
+        {
+            Rectangle invent1 = new Rectangle(158, 250, 35, 35);
+            Rectangle invent2 = new Rectangle(210, 250, 35, 35);
+            MouseState ms = Mouse.GetState();
+            mouseRec = new RectangleF(ms.X, ms.Y, 50, 50);
+            if (mouseRec.Intersects(invent1) && ms.LeftButton == ButtonState.Pressed && Ontable)
+            {
+                Console.WriteLine("intersect0!");
+                CraftList.Add(BagList[0]);
+                BagList.RemoveAt(0);
+            }
+            //if (mouseRec.Intersects(invent2) && ms.LeftButton == ButtonState.Pressed && Ontable)
+            //{
+            //    Console.WriteLine("intersect0!");
+            //    CraftList.Add(BagList[1]);
+            //    BagList.RemoveAt(1);
+            //}
+        }
         public int countPopUp;
         public void CountTime(int timePopup)
         {

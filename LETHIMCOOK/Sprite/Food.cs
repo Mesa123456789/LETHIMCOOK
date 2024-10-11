@@ -28,8 +28,17 @@ namespace LETHIMCOOK.Sprite
         public RectangleF Bounds;
         AnimatedTexture SpriteTexture;
         Vector2 playerPos;
-        string name;
+        public string name;
+        public bool istrue;
+        public int id;
 
+        public Food(int id,string name, Texture2D foodTexture, bool Istrue)
+        {
+            this.id = id;
+            this.name = name;
+            this.foodTexture = foodTexture;
+            istrue = Istrue;
+        }
         public Food(string name,Texture2D foodTexture, Texture2D foodTexBag ,Vector2 foodPosition)
         {
             this.name = name;

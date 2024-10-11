@@ -30,12 +30,21 @@ namespace LETHIMCOOK.Sprite
         private double lastHitTime = 0;
         int countDamage;
         int enemyHp = 3;
+        bool istrue;
+        int id;
 
-        public Enemy(string name,Texture2D enemytex, Texture2D enemyTexbag, Vector2 enemyPosition) : base(name,enemytex, enemyTexbag, enemyPosition)
+        public Enemy(int id, string name, Texture2D enemyTexbag, bool Istrue) : base(id, name, enemyTexbag, Istrue)
+        {
+            this.id = id;
+            this.name = name;
+            this.enemyTexbag = enemyTexbag;
+            istrue = Istrue;
+        }
+        public Enemy(string name,Texture2D enemytex, Texture2D enemyTexbag, Vector2 foodPosition) : base(name,enemytex, enemyTexbag, foodPosition)
         {
             texture = enemytex;
             this.enemyTexbag = enemyTexbag;
-            this.enemyPosition = enemyPosition;
+            this.enemyPosition = foodPosition;
             framePerSec = 7;
             timePerFream = (float)1 / framePerSec;
             frame = 0;
@@ -73,24 +82,28 @@ namespace LETHIMCOOK.Sprite
                     }
                 }
             }
-            foodBox = new RectangleF((int)enemyPosition.X, (int)enemyPosition.Y, 50, 50);
+            foodBox = new RectangleF((int)foodPosition.X, (int)foodPosition.Y, 50, 50);
             UpdateFream((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         bool isCheck;
         public override void Draw(SpriteBatch batch)
         {
-            batch.Draw(texture,enemyPosition, new Rectangle(32 * frame, 0, 32, 32), Color.White, 0.0f, new Vector2(16, 16), 2.0f, SpriteEffects.None, 0.0f);
+            batch.Draw(texture, foodPosition, new Rectangle(32 * frame, 0, 32, 32), Color.White, 0.0f, new Vector2(16, 16), 2.0f, SpriteEffects.None, 0.0f);
         }
         public override void DrawBag(SpriteBatch batch)
         {
-            batch.Draw(enemyTexbag, enemyPosition, new Rectangle(0, 0, 32, 32), Color.White);
+            batch.Draw(enemyTexbag, foodPosition, new Rectangle(0, 0, 32, 32), Color.White);
         }
 
         public override void OnCollision()
         {
             OntableAble = true;
             Game1.BagList.Add(this);
+            for(int i = 0; i < Game1.BagList.Count; i++)
+            {
+                Game1.BagList[i].foodPosition = new Vector2(160 + i * 52, 250);
+            }
             Game1.IsPopUp = true;
             foreach (Enemy enemy in Game1.enemyList)
             {
