@@ -298,7 +298,7 @@ namespace LETHIMCOOK
                     _spriteBatch.Draw(BagList[i].foodTexBag, new Vector2(160 + i * 52, 250), new Rectangle(0,0, 32, 32), Color.White);
                 }
             }
-
+            ////
             //if (Crafting == true && Ontable)// && food.getFood == 2)
             //{
             //    _spriteBatch.Draw(QuestUI, new Vector2(720, 320) , Color.White);
