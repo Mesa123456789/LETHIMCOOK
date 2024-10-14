@@ -40,14 +40,36 @@ namespace LETHIMCOOK.Screen
         Texture2D slime, rainbowsmilemeat;
         Texture2D pinkslime, pinksmilemeat;
         Texture2D icebear , wipcream;
-        //Texture2D jellyfish;
+        Texture2D jellyfish;
         Texture2D popup;
         Texture2D enemytex, enemytexbag;
         bool Istrue;
+        ///***new
+        Texture2D coriander, grass, greendimon, hippowing, jeelyfishmeat, lemon, meatball, icecream;
+        Texture2D Mendrek, noodle, pinkdimon, seafood, shumai, smileeggs;
+        Texture2D stone, suki, tempura, purpledimon;
 
-        Vector2 playerPos;// = new Vector2(player.Bounds.Position.X, player.Bounds.Position.Y);
+Vector2 playerPos;// = new Vector2(player.Bounds.Position.X, player.Bounds.Position.Y);
         public GameplayScreen(Game1 game, EventHandler theScreenEvent ) : base(theScreenEvent)
         {
+            RestauarntScreen.IsCooking = false;
+            coriander = game.Content.Load<Texture2D>("ingre/coriander");
+            grass = game.Content.Load<Texture2D>("ingre/grass");
+            greendimon = game.Content.Load<Texture2D>("ingre/greendimon");
+            hippowing = game.Content.Load<Texture2D>("ingre/hippowing");
+            lemon = game.Content.Load<Texture2D>("ingre/lemon");
+            meatball = game.Content.Load<Texture2D>("ingre/meatball");
+            Mendrek = game.Content.Load<Texture2D>("ingre/Mendrek");
+            noodle = game.Content.Load<Texture2D>("ingre/noodle");
+            pinkdimon = game.Content.Load<Texture2D>("ingre/pinkdimon");
+            seafood = game.Content.Load<Texture2D>("ingre/seafood");
+            shumai = game.Content.Load<Texture2D>("ingre/shumai");
+            smileeggs = game.Content.Load<Texture2D>("ingre/smileeggs");
+            stone = game.Content.Load<Texture2D>("ingre/stone");
+            suki = game.Content.Load<Texture2D>("ingre/suki");
+            tempura = game.Content.Load<Texture2D>("ingre/tempura");
+            //purpledimon = game.Content.Load<Texture2D>("ingre/อัญมณี");
+            //***new
             popup = game.Content.Load<Texture2D>("popup");
             foodTexture = game.Content.Load<Texture2D>("crab");
             pinkslime = game.Content.Load<Texture2D>("pinksmaile");
@@ -56,6 +78,7 @@ namespace LETHIMCOOK.Screen
             rat = game.Content.Load<Texture2D>("rat");
             slime = game.Content.Load<Texture2D>("slime");
             icebear = game.Content.Load<Texture2D>("icebear");
+            jellyfish = game.Content.Load<Texture2D>("jellyfish");
             crabmeat = game.Content.Load<Texture2D>("ingre/crabmeat");
             hippomeat = game.Content.Load<Texture2D>("ingre/hippomeat");
             chickenmeat = game.Content.Load<Texture2D>("ingre/chickenmeat");
@@ -63,23 +86,61 @@ namespace LETHIMCOOK.Screen
             rainbowsmilemeat = game.Content.Load<Texture2D>("ingre/rainbowsmilemeat");
             pinksmilemeat = game.Content.Load<Texture2D>("ingre/pinksmilemeat");
             wipcream = game.Content.Load<Texture2D>("ingre/wipcream");
-
+            jeelyfishmeat = game.Content.Load<Texture2D>("ingre/jeelyfishmeat");
+            icecream = game.Content.Load<Texture2D>("ingre/icecream");
+            Game1.BagList.Add(new Enemy(8,"crab", foodTexture, crabmeat, new Vector2(550, 250)));
+            Game1.BagList.Add(new Enemy(9, "pinksmaile", pinkslime, pinksmilemeat, new Vector2(200, 400)));
+            Game1.BagList.Add(new Enemy(10, "hippo", hippo, hippomeat, new Vector2(300 + 100, 300)));
+            Game1.BagList.Add(new Enemy(11, "chicken", chicken, chickenmeat, new Vector2(150 + 100, 150)));
+            Game1.BagList.Add(new Enemy(12, "rat", rat, cheese, new Vector2(300 + 100, 200)));
+            Game1.BagList.Add(new Enemy(13, "slime", slime, rainbowsmilemeat, new Vector2(380 + 100, 330)));
+            Game1.BagList.Add(new Enemy(14, "icebear", icebear, wipcream, new Vector2(230 + 100, 260)));
             //jellyfish = game.Content.Load<Texture2D>("jellyfish");
-            Game1.enemyList.Add(new Enemy("crab", foodTexture, crabmeat, new Vector2(550, 250)));
-            Game1.enemyList.Add(new Enemy("pinksmaile",pinkslime, pinksmilemeat, new Vector2(200, 400)));
-            Game1.enemyList.Add(new Enemy("hippo", hippo, hippomeat, new Vector2(300 + 100, 300)));
-            Game1.enemyList.Add(new Enemy("chicken", chicken, chickenmeat, new Vector2(150 + 100, 150)));
-            Game1.enemyList.Add(new Enemy("rat", rat, cheese, new Vector2(300 + 100, 200)));
-            Game1.enemyList.Add(new Enemy("slime",slime, rainbowsmilemeat,new Vector2(380 + 100, 330)));
-            Game1.enemyList.Add(new Enemy("icebear", icebear, wipcream, new Vector2(230 + 100, 260)));;
-            ///Game1.BagList.Add(new Enemy("icebear", icebear, wipcream, new Vector2(230 + 100, 260))); ;
-            Game1.ingredentList.Add(new Enemy(1,"crab", foodTexture, Istrue));
-            Game1.ingredentList.Add(new Enemy(2,"pinksmaile", pinkslime,Istrue));
-            Game1.ingredentList.Add(new Enemy(3,"hippo", hippo, Istrue));
-            Game1.ingredentList.Add(new Enemy(4,"chicken", chicken, Istrue));
-            Game1.ingredentList.Add(new Enemy(5,"rat", rat, Istrue));
-            Game1.ingredentList.Add(new Enemy(6,"slime", slime, Istrue));
-            Game1.ingredentList.Add(new Enemy(7,"icebear", icebear, Istrue)); 
+            Game1.enemyList.Add(new Enemy(8,"crab", foodTexture, crabmeat, new Vector2(550, 250)));
+            Game1.enemyList.Add(new Enemy(9,"pinksmaile",pinkslime, pinksmilemeat, new Vector2(200, 400)));
+            Game1.enemyList.Add(new Enemy(10, "hippo", hippo, hippomeat, new Vector2(300 + 100, 300)));
+            Game1.enemyList.Add(new Enemy(11, "chicken", chicken, chickenmeat, new Vector2(150 + 100, 150)));
+            Game1.enemyList.Add(new Enemy(12, "rat", rat, cheese, new Vector2(300 + 100, 200)));
+            Game1.enemyList.Add(new Enemy(13, "slime",slime, rainbowsmilemeat,new Vector2(380 + 100, 330)));
+            Game1.enemyList.Add(new Enemy(14, "icebear", icebear, wipcream, new Vector2(230 + 100, 260)));
+            //***new
+            Game1.enemyList.Add(new Enemy(14, "jellyfish", jellyfish, jeelyfishmeat, new Vector2(230 + 100, 260)));
+            //// Texture2D coriander, grass, greendimon,**** hippowing, jeelyfishmeat, lemon, ****meatball;
+            ///  Texture2D Mendrek, noodle, pinkdimon, seafood, shumai,**** smileeggs;
+           ///// Texture2D stone, suki, tempura, purpledimon;
+            Game1.foodList.Add(new Food("coriander", coriander, coriander, new Vector2(1115, 594)));
+            Game1.foodList.Add(new Food("grass", grass, grass, new Vector2(1230, 545)));
+            Game1.foodList.Add(new Food("greendimon", greendimon, greendimon, new Vector2(1005, 480)));
+            Game1.foodList.Add(new Food("lemon", lemon, lemon, new Vector2(1400, 594)));
+            Game1.foodList.Add(new Food("Mendrek", Mendrek, Mendrek, new Vector2(1280, 720)));
+            Game1.foodList.Add(new Food("noodle", noodle, noodle, new Vector2(182, 649)));
+            Game1.foodList.Add(new Food("pinkdimon", pinkdimon, pinkdimon, new Vector2(194, 594)));
+            Game1.foodList.Add(new Food("shumai", shumai, shumai, new Vector2(250, 600)));
+            Game1.foodList.Add(new Food("stone", stone, stone, new Vector2(260, 594)));
+            ///Game1.foodList.Add(new Food("purpledimon", purpledimon, new Vector2(270, 600)));
+            Game1.foodList.Add(new Food("tempura", tempura, tempura, new Vector2(249, 600)));
+            Game1.foodList.Add(new Food("icecream", icecream, icecream, new Vector2(249, 655)));
+
+            Game1.seasoningList.Add(new Food("suki", suki, false, new Vector2(271 + (52 * 3)), new Rectangle(271 + (52 * 3), 237, 32, 32)));
+            Game1.seasoningList.Add(new Food("seafood", seafood, false, new Vector2(271 + (52 * 4)), new Rectangle(271 + (52 * 4), 237, 32, 32)));
+
+            Game1.BagList.Add(new Enemy(14, "jellyfish", jellyfish, jeelyfishmeat, new Vector2(230 + 100, 260)));
+            Game1.BagList.Add(new Food("coriander", coriander, coriander, new Vector2(1115, 594)));
+            Game1.BagList.Add(new Food("grass", grass, grass, new Vector2(1230, 545)));
+            Game1.BagList.Add(new Food("greendimon", greendimon, greendimon, new Vector2(1005, 480)));
+            Game1.BagList.Add(new Food("lemon", lemon, lemon, new Vector2(1400, 594)));
+            Game1.BagList.Add(new Food("Mendrek", Mendrek, Mendrek, new Vector2(1280, 720)));
+            Game1.BagList.Add(new Food("noodle", noodle, noodle, new Vector2(182, 649)));
+            Game1.BagList.Add(new Food("pinkdimon", pinkdimon, pinkdimon, new Vector2(194, 594)));
+            Game1.BagList.Add(new Food("shumai", shumai, shumai, new Vector2(250, 600)));
+            Game1.BagList.Add(new Food("stone", stone, stone, new Vector2(260, 594)));
+            Game1.BagList.Add(new Food("tempura", tempura, tempura, new Vector2(249, 600)));
+            Game1.BagList.Add(new Food("suki", suki, false, new Vector2(271 + (52 * 3)), new Rectangle(271 + (52 * 3), 237, 32, 32)));
+            Game1.BagList.Add(new Food("seafood", seafood, false, new Vector2(271 + (52 * 4)), new Rectangle(271 + (52 * 4), 237, 32, 32)));
+            Game1.BagList.Add(new Food("icecream", icecream, icecream, new Vector2(249, 600)));
+
+
+
             var viewportadapter = new BoxingViewportAdapter(game.Window, game.GraphicsDevice, 800, 450);
             Game1._camera = new OrthographicCamera(viewportadapter);//******//
             game._bgPosition = new Vector2(400, 225);//******//

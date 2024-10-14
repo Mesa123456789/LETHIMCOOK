@@ -186,14 +186,14 @@ namespace LETHIMCOOK.Sprite
             }
 
 
-            if (state == 1 && isAttack == true && !SeaScreen._isFishing)
+            if (state == 1 && isAttack == true && !SeaScreen._isFishing && !RestauarntScreen.IsCooking)
             {
                 _spriteBatch.Draw(effect, new Vector2(Bounds.Position.X , Bounds.Position.Y + 15), new Rectangle(0, 0, 48, 48), Color.White, rotation, new Vector2(24, 24), 2.0f, SpriteEffects.FlipVertically, 0.0f);
                 _spriteBatch.Draw(sword, new Vector2(Bounds.Position.X, Bounds.Position.Y + 15), new Rectangle(0, 0, 48, 48), Color.White, rotation, new Vector2(24, 24), 2.0f, SpriteEffects.None, 0.0f);
             }
 
             //Attack 2
-            if (state == 2 && isAttack == true && !SeaScreen._isFishing)
+            if (state == 2 && isAttack == true && !SeaScreen._isFishing && !RestauarntScreen.IsCooking)
             {
                 postrotation = rotation;
                 _spriteBatch.Draw(effect, new Vector2(Bounds.Position.X, Bounds.Position.Y + 15), new Rectangle(0, 0, 48, 48), Color.White, rotation, new Vector2(24, 24), 2.0f, SpriteEffects.None, 0.0f);
@@ -201,7 +201,7 @@ namespace LETHIMCOOK.Sprite
             }
 
             //Attack 3
-            if (state == 3 && isAttack == true && !SeaScreen._isFishing)
+            if (state == 3 && isAttack == true && !SeaScreen._isFishing && !RestauarntScreen.IsCooking)
             {
                 postrotation = rotation;
                 _spriteBatch.Draw(effect, new Vector2(Bounds.Position.X, Bounds.Position.Y + 15), new Rectangle(0, 0, 48, 48), Color.White, rotation, new Vector2(24, 24), 2.0f, SpriteEffects.None, 0.0f);

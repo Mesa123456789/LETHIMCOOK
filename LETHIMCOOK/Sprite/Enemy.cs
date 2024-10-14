@@ -7,6 +7,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.ViewportAdapters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,8 +41,9 @@ namespace LETHIMCOOK.Sprite
             this.enemyTexbag = enemyTexbag;
             istrue = Istrue;
         }
-        public Enemy(string name,Texture2D enemytex, Texture2D enemyTexbag, Vector2 foodPosition) : base(name,enemytex, enemyTexbag, foodPosition)
+        public Enemy(int id, string name,Texture2D enemytex, Texture2D enemyTexbag, Vector2 foodPosition) : base(name,enemytex, enemyTexbag, foodPosition)
         {
+            this.id = id;
             texture = enemytex;
             this.enemyTexbag = enemyTexbag;
             this.enemyPosition = foodPosition;
@@ -100,10 +102,6 @@ namespace LETHIMCOOK.Sprite
         {
             OntableAble = true;
             Game1.BagList.Add(this);
-            for(int i = 0; i < Game1.BagList.Count; i++)
-            {
-                Game1.BagList[i].foodPosition = new Vector2(160 + i * 52, 250);
-            }
             Game1.IsPopUp = true;
             foreach (Enemy enemy in Game1.enemyList)
             {

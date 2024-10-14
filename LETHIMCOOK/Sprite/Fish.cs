@@ -12,15 +12,13 @@ namespace LETHIMCOOK.Sprite
     {
         Vector2 fishPos;
         Texture2D fishTexBag;
-        string name;
         Texture2D fishTex;
 
         private Random _random;
         public static bool _isFishing;
         public static double _fishCatchTime;
         public static double _elapsedTime;
-        bool istrue;
-        int id;
+
 
         public Fish(int id, string name, Texture2D fishTex, bool Istrue) : base(id, name, fishTex, Istrue)
         {
@@ -29,8 +27,9 @@ namespace LETHIMCOOK.Sprite
             this.fishTex = fishTex;
             istrue = Istrue;
         }
-        public Fish(string name, Texture2D fishTex, Texture2D fishTexBag, Vector2 fishPos) : base(name, fishTex, fishTexBag, fishPos)
+        public Fish(int id, string name, Texture2D fishTex, Texture2D fishTexBag, Vector2 fishPos) : base(name, fishTex, fishTexBag, fishPos)
         {
+            this.id = id;
             this.name = name;
             this.fishTex = fishTex;
             this.fishPos = fishPos;

@@ -31,7 +31,6 @@ namespace LETHIMCOOK
         public static Vector2 move;
         public static OrthographicCamera _camera;
         public Vector2 _cameraPosition;
-
         ///****/
         public Texture2D book;
         Texture2D ui;
@@ -46,14 +45,17 @@ namespace LETHIMCOOK
         public RectangleF bagRec;
         public Texture2D bag;
         Texture2D interact , craft;
-
+        Texture2D ayinomoto, chili, oil, milk, salt2, sauce2, rice, sugar;
+        bool Istrue;
         public static List<Food> BagList = new List<Food>();
         public static List<Food> foodList = new();
         public static List<Enemy> enemyList = new();
         public static List<Food> CraftList = new List<Food>();
         public static Texture2D Uni;
         public static List<Food> ingredentList = new List<Food>();
-
+        public static List<Food> seasoningList = new List<Food>();
+        public static List<Food> MenuList = new List<Food>();
+        public static List<Vector2> inventBox = new();
         Craft _craft = new Craft();
         
 
@@ -73,9 +75,7 @@ namespace LETHIMCOOK
         public RectangleF Bounds = new RectangleF(new Vector2(750, 440), new Vector2(40, 60));
         protected override void Initialize()
         {
-           // player = new Player(SpriteTexture, playerPos, game, Bounds);
-            //camera_ = new Camera_1();
-            // TODO: Add your initialization logic here
+            GotMenu = false;
             base.Initialize();
         }
         public static int currentHeart;
@@ -84,6 +84,7 @@ namespace LETHIMCOOK
         {
             SpriteTexture = new AnimatedTexture(new Vector2(0, 0), 0, 2f, 1f);
             SpriteTexture.Load(Content, "PlayerIdel", 5, 4, 5);
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             ui = Content.Load<Texture2D>("ui");
             uiHeart = Content.Load<Texture2D>("uiHeart");
@@ -98,6 +99,76 @@ namespace LETHIMCOOK
             popup = Content.Load<Texture2D>("popup");
             craft = Content.Load<Texture2D>("craft");
             Uni = Content.Load<Texture2D>("Uni");
+            ayinomoto = Content.Load<Texture2D>("ingre/ayinomoto");
+            chili = Content.Load<Texture2D>("ingre/chili");
+            oil = Content.Load<Texture2D>("ingre/oil");
+            milk = Content.Load<Texture2D>("ingre/milk");
+            salt2 = Content.Load<Texture2D>("ingre/salt2");
+            sauce2 = Content.Load<Texture2D>("ingre/sauce2");
+            rice = Content.Load<Texture2D>("ingre/rice");
+            sugar = Content.Load<Texture2D>("ingre/sugar");
+            inventBox.Add(new Vector2(161, 250));
+            inventBox.Add(new Vector2(161 + 52, 250));
+            inventBox.Add(new Vector2(161 + (52 * 2), 250));
+            inventBox.Add(new Vector2(161 + (52 * 3), 250));
+            inventBox.Add(new Vector2(161 + (52 * 4), 250));
+            inventBox.Add(new Vector2(161 + (52 * 5), 250));
+            inventBox.Add(new Vector2(161 + (52 * 6), 250));
+            inventBox.Add(new Vector2(161 + (52 * 7), 250));
+            inventBox.Add(new Vector2(161 + (52 * 8), 250));
+            inventBox.Add(new Vector2(161 + (52 * 9), 250));
+            inventBox.Add(new Vector2(161, 310));
+            inventBox.Add(new Vector2(161 + 52, 310));
+            inventBox.Add(new Vector2(161 + (52 * 2), 310));
+            inventBox.Add(new Vector2(161 + (52 * 3), 310));
+            inventBox.Add(new Vector2(161 + (52 * 4), 310));
+            inventBox.Add(new Vector2(161 + (52 * 5), 310));
+            inventBox.Add(new Vector2(161 + (52 * 6), 310));
+            inventBox.Add(new Vector2(161 + (52 * 7), 310));
+            inventBox.Add(new Vector2(161 + (52 * 8), 310));
+            inventBox.Add(new Vector2(161 + (52 * 9), 310));
+            inventBox.Add(new Vector2(161 , 366));
+            inventBox.Add(new Vector2(161 + 52, 366));
+            inventBox.Add(new Vector2(161 + (52 * 2), 366));
+            inventBox.Add(new Vector2(161 + (52 * 3), 366));
+            inventBox.Add(new Vector2(161 + (52 * 4), 366));
+            inventBox.Add(new Vector2(161 + (52 * 5), 366));
+            inventBox.Add(new Vector2(161 + (52 * 6), 366));
+            inventBox.Add(new Vector2(161 + (52 * 7), 366));
+            inventBox.Add(new Vector2(161 + (52 * 8), 366));
+            inventBox.Add(new Vector2(161 + (52 * 9), 366));
+            inventBox.Add(new Vector2(161, 430));
+            inventBox.Add(new Vector2(161 + 52, 430));
+            inventBox.Add(new Vector2(161 + (52 * 2), 430));
+            inventBox.Add(new Vector2(161 + (52 * 3), 430));
+            inventBox.Add(new Vector2(161 + (52 * 4), 430));
+            inventBox.Add(new Vector2(161 + (52 * 5), 430));
+            inventBox.Add(new Vector2(161 + (52 * 6), 430));
+            inventBox.Add(new Vector2(161 + (52 * 7), 430));
+            inventBox.Add(new Vector2(161 + (52 * 8), 430));
+            inventBox.Add(new Vector2(161 + (52 * 9), 430));
+            inventBox.Add(new Vector2(161 + (52 * 10), 430));
+            inventBox.Add(new Vector2(161 + (52 * 11), 430));
+            ///Texture2D ayinomoto, chili, oil, milk, salt2, sauce2, rice, sugar;
+            seasoningList.Add(new Food("ayinomoto", ayinomoto, false, new Vector2(271, 195), new Rectangle(271, 183, 32, 32)));
+            seasoningList.Add(new Food("chili", chili, false, new Vector2(271 + 52, 183), new Rectangle(271 + 52 , 183, 32, 32)));
+            seasoningList.Add(new Food("oil", oil, false, new Vector2(271 + (52 * 2), 183), new Rectangle(271 + (52*2), 183, 32, 32)));
+            seasoningList.Add(new Food("milk", milk, false, new Vector2(271 + (52 * 3), 183), new Rectangle(273 + (52 * 3), 183, 32, 32)));
+            seasoningList.Add(new Food("salt2", salt2, false, new Vector2(271 + (52 * 4), 183), new Rectangle(271 + (52 * 4), 183, 32, 32)));
+            seasoningList.Add(new Food("sauce2", sauce2, false, new Vector2(271, 237), new Rectangle(271, 237, 32, 32)));
+            seasoningList.Add(new Food("rice", rice, false, new Vector2(271 + 52, 237), new Rectangle(271 + 52, 237, 32, 32)));
+            seasoningList.Add(new Food("sugar", sugar, false, new Vector2(271 + (52 * 2)), new Rectangle(271 + (52 * 2), 237, 32, 32)));
+
+
+            ///***สุตรโกง
+            BagList.Add(new Food("ayinomoto", ayinomoto, false, new Vector2(271, 195), new Rectangle(271, 183, 32, 32)));
+            BagList.Add(new Food("chili", chili, false, new Vector2(271 + 52, 183), new Rectangle(271 + 52, 183, 32, 32)));
+            BagList.Add(new Food("oil", oil, false, new Vector2(271 + (52 * 2), 183), new Rectangle(271 + (52 * 2), 183, 32, 32)));
+            BagList.Add(new Food("milk", milk, false, new Vector2(271 + (52 * 3), 183), new Rectangle(273 + (52 * 3), 183, 32, 32)));
+            BagList.Add(new Food("salt2", salt2, false, new Vector2(271 + (52 * 4), 183), new Rectangle(271 + (52 * 4), 183, 32, 32)));
+            BagList.Add(new Food("sauce2", sauce2, false, new Vector2(271, 237), new Rectangle(271, 237, 32, 32)));
+            BagList.Add(new Food("rice", rice, false, new Vector2(271 + 52, 237), new Rectangle(271 + 52, 237, 32, 32)));
+            BagList.Add(new Food("sugar", sugar, false, new Vector2(271 + (52 * 2)), new Rectangle(271 + (52 * 2), 237, 32, 32)));
 
             ///***///
             TitleScreen = new TitleScreen(this, new EventHandler(GameplayScreenEvent));
@@ -105,7 +176,7 @@ namespace LETHIMCOOK
             CandyScreen = new CandyScreen(this, new EventHandler(GameplayScreenEvent));
             SeaScreen = new SeaScreen(this, new EventHandler(GameplayScreenEvent));
             GameplayScreen = new GameplayScreen(this, new EventHandler(GameplayScreenEvent));
-            mCurrentScreen = GameplayScreen;
+            mCurrentScreen = RestauarntScreen;
             currentHeart = CandyScreen.uiHeart.Width - 10;
         }
         public RectangleF bookRec;
@@ -119,7 +190,6 @@ namespace LETHIMCOOK
            Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
             UpDateUI();
-            //player.Update(gameTime);
             mCurrentScreen.Update(gameTime);
             base.Update(gameTime);
         }
@@ -162,24 +232,26 @@ namespace LETHIMCOOK
         bool IssendMenuInterect = false;
         bool IsInterect = false;
         public static bool Ontable = false;
-        bool GotMenu = false;
+        public static bool GotMenu = false;
         bool Crafting = false;
         int MenuPopup;
         bool IsFrigeInterect = false;
-        bool sendingMenu = false;
-        bool getUni;
+         public static bool sendingMenu = false;
+        public static bool getUni;
         Rectangle craftBox;
+        Rectangle xBoxFride;
+        bool xBoxFrideCursor;
+        int rotationMenuBG;
+        public static bool finsihcraft;
         public void UpdateUIRest(Player player , GameTime gameTime)
         {
             MouseState ms = Mouse.GetState();
             mouseRec = new RectangleF(ms.X, ms.Y, 50, 50);
-            RectangleF FrigeRec = new RectangleF(348, 120, 40, 80);
+            RectangleF FrigeRec = new RectangleF(352, 115, 40, 50);
             RectangleF tableBox = new RectangleF(450, 150, 130, 20);
             RectangleF sendMenu = new RectangleF(600, 240, 40, 30);
             RectangleF equal = new RectangleF(345, 140, 120, 50);
-            craftBox = new Rectangle(335, 140, 140, 50);
-            Rectangle invent1 = new Rectangle(158, 250, 35, 35);
-            Rectangle invent2 = new Rectangle(210, 250, 35, 35);
+            Rectangle xBoxFride = new Rectangle(560,87,35,35);
             if (player.Bounds.Intersects(FrigeRec))
             {
                 IsFrigeInterect = true;
@@ -188,7 +260,19 @@ namespace LETHIMCOOK
                     openFridgeUI = true;
                 }
             }
-            else { IsFrigeInterect = false; openFridgeUI = false; }
+            if (mouseRec.Intersects(xBoxFride) && ms.LeftButton == ButtonState.Pressed || !player.Bounds.Intersects(FrigeRec))
+            {
+                openFridgeUI = false;
+            }
+            if (mouseRec.Intersects(xBoxFride))
+            {
+                xBoxFrideCursor = true;
+            }
+            else
+            {
+                xBoxFrideCursor = false;
+            }
+
             if (player.Bounds.Intersects(tableBox))
             {
                 IsInterect = true;
@@ -202,124 +286,74 @@ namespace LETHIMCOOK
                 IsInterect = false;
                 Ontable = false;
             }
-            // Rectangle foodRec = new Rectangle((int)foodPosition.X,
-            for (int i = 0; i < BagList.Count; i++)
-            {
-                BagList[i].Update(gameTime);
-                foreach(Food food in BagList)
-                {
-                    if (mouseRec.Intersects(BagList[i].foodBox) && ms.LeftButton == ButtonState.Pressed && Ontable)
-                    {
-                        Console.WriteLine("intersect!");
-                        CraftList.Add(BagList[i]);
-                        BagList.RemoveAt(i);  
-                    }
-                    break;
-                }
-
-            }
-
-            ///
-
-
-            if (ms.LeftButton == ButtonState.Pressed && mouseRec.Intersects(craftBox))
-            {
-                craftBox.X += 10;
-                for (int i = 0; i < ingredentList.Count; i++)
-                {
-                    for (int j = 0; j < CraftList.Count; j++)
-                    {
-                        if (ingredentList[i].name == CraftList[j].name)
-                        {
-                            ingredentList[i].istrue = true;
-                            Console.WriteLine("carft");
-                        }
-                        //else
-                        //{
-                        //    ingredentList[i].istrue = false;
-                        //}
-                    }
-                }
-                if (ingredentList[0].istrue == true && ingredentList[1].istrue == true)
-                {
-                    Console.WriteLine("getfood");
-                    getUni = true;
-                }
-            }
 
             if (player.Bounds.Intersects(sendMenu))
             {
                 IssendMenuInterect = true;
-                //if (mouseBox.Intersects(sendMenu) && ms.LeftButton == ButtonState.Pressed && GotMenu == true)
-                //{
-                //    sendingMenu = false;
-                //}
+                if (mouseRec.Intersects(sendMenu) && ms.LeftButton == ButtonState.Pressed && GotMenu == true)
+                {
+                    sendingMenu = true;
+                }
             }
             else
             {
                 IssendMenuInterect = false;
             }
+            if (sendingMenu == true)
+            {
+                getUni = false;
+                MenuList.Add(new Food(Uni,new Rectangle(0,0,128,128)));
+            }
+            if (rotationMenuBG < 360)
+            {
+                rotationMenuBG++;
+            }
+            if (rotationMenuBG == 360)
+            {
+                rotationMenuBG = 0;
+            }
         }
         public void DrawUIRest(SpriteBatch _spriteBatch)
         {
 
-            //if (sendingMenu == true && GotMenu == true && food.getFood == 2)
-            //{
-            //    _spriteBatch.Draw(uni, new Rectangle((int)player.CharPosition.X, (int)player.CharPosition.Y + 13, 32, 32), Color.White);
-            //}
-            if(getUni == true)
-            {
-                _spriteBatch.Draw(Uni, new Rectangle(0,0, 200,200), Color.White);
-            }
             if (openFridgeUI == true)
             {
                 _spriteBatch.Draw(FridgeUi, new Vector2(0, 0), Color.White);
+                for (int i = 0; i < Game1.seasoningList.Count; i++)
+                {
+                    _spriteBatch.Draw(seasoningList[i].foodTexBag, seasoningList[i].foodRec, Color.White);
+                }
+                if (xBoxFrideCursor == false)
+                {
+                    _spriteBatch.Draw(QuestUI, new Vector2(560, 87), new Rectangle(745 + 64, 81, 64, 40), Color.White);
+                }
+                if (xBoxFrideCursor == true)
+                {
+                    _spriteBatch.Draw(QuestUI, new Vector2(560, 87), new Rectangle(745, 81, 64, 40), Color.White);
+                }
+
             }
             if (Ontable == true)
             {
                 _spriteBatch.Draw(craft, new Vector2(215, 60), Color.White);
                 _spriteBatch.Draw(inventory, new Vector2(129, 220), Color.White);
-                _spriteBatch.Draw(popup, craftBox, Color.White);
-                _spriteBatch.Draw(popup, new Rectangle(158,250, 30,30), Color.White);
-                _spriteBatch.Draw(popup, new Rectangle(210, 250, 30, 30), Color.White);
-                //if (!GotMenu)
-                //{
-                //    for (int i = 0; i < Game1.CraftList.Count; i++)
-                //    {
-                //        _spriteBatch.Draw(Game1.CraftList[i].foodTexBag, new Vector2(285 + i * 68, 98), new Rectangle(0, 0, 32, 32), Color.White);
-                //    }
-                //}
+                // _spriteBatch.Draw(popup, craftBox, Color.White);
                 for (int i = 0; i < CraftList.Count; i++)
                 {
-                    _spriteBatch.Draw(CraftList[i].foodTexBag, new Vector2(285 + i * 68, 98), new Rectangle(0, 0, 32, 32), Color.White);
+                    _spriteBatch.Draw(CraftList[i].foodTexBag, new Vector2(287 + i * 69, 95), new Rectangle(0, 0, 32, 32), Color.White);
                 }
                 for (int i = 0; i < BagList.Count; i++)
                 {
-                    _spriteBatch.Draw(BagList[i].foodTexBag, new Vector2(160 + i * 52, 250), new Rectangle(0,0, 32, 32), Color.White);
+                    _spriteBatch.Draw(BagList[i].foodTexBag, inventBox[i] , new Rectangle(0,0, 32, 32), Color.White);
                 }
+                if (getUni == true && finsihcraft == true)
+                {
+                    _spriteBatch.Draw(QuestUI, new Vector2(333, 110), new Rectangle(725, 133, 200, 190), Color.White);
+                    _spriteBatch.Draw(Uni, new Rectangle(343,120,128,128), Color.White);
+                    //_spriteBatch.Draw(QuestUI, new Vector2(720, 320), new Rectangle(725, 133, 146, 190), Color.White, rotationMenuBG , Vector2.Zero, 1f, 0, 1);
+                }
+                CountTime(200);
             }
-            ////
-            //if (Crafting == true && Ontable)// && food.getFood == 2)
-            //{
-            //    _spriteBatch.Draw(QuestUI, new Vector2(720, 320) , Color.White);
-            //    //_spriteBatch.Draw(menuBG, new Rectangle(650, 230, 300, 300), Color.White);
-            //    ///_spriteBatch.Draw(uni, new Rectangle(733, 330, 128, 128), Color.White);
-            //    GotMenu = true;
-            //}
-            ////_spriteBatch.Draw(QuestUI, new Vector2(720, 320), new Rectangle(725, 133, 146, 190), Color.White,rotationMenuBG, Vector2.Zero, 1f, 0, 1);
-            ////if (MenuPopup == 1 && !FinsihCooking)
-            ////{
-            ////    if (Crafting == true && food.getFood == 2)
-            ////    {
-            ////        _spriteBatch.Draw(QuestUI, new Vector2(720, 320), new Rectangle(725, 133, 146, 190), Color.White,
-            ////            rotationMenuBG, Vector2.Zero, 1f, 0, 1);
-            ////        _spriteBatch.Draw(menuBG, new Rectangle(650, 230, 300, 300), Color.White);
-            ////        _spriteBatch.Draw(uni, new Rectangle(733, 330, 128, 128), Color.White);
-            ////        GotMenu = true;
-            ////    }
-
-            ////    CountTime(200);
-            ////}
         }
         public void UpDateUI()
         {
@@ -388,20 +422,22 @@ namespace LETHIMCOOK
             if (currentHeart < 60) { color = Color.Red; }
             else { color = Color.White; }
 
-
         }
-
+        bool drawBag1, drawBag2;
         Color color = Color.White;
         bool OnCursor = false;
         bool OnCursor2 = false;
         bool OnCursorXBOX = false;
         bool openbookUI = false;
         bool openQuestUI = false;
-        bool openFridgeUI = false;
+        public static bool openFridgeUI = false;
         int mouse_state = 1;
         public void DrawUiGameplay(SpriteBatch _spriteBatch)
         {
-            
+            for (int i = 0; i < MenuList.Count; i++)
+            {
+                _spriteBatch.Draw(MenuList[i].foodTexBag, MenuList[i].foodRec, new Rectangle(189, 160, 32, 32), Color.White);
+            }
             foreach (Food food in BagList)
             {
                 if (IsPopUp == true)
@@ -411,7 +447,7 @@ namespace LETHIMCOOK
                         _spriteBatch.Draw(popup, new Vector2(635, 170), Color.White);
                         _spriteBatch.Draw(BagList[i].foodTexBag, new Rectangle(653, 180, 32,32), new Rectangle(0,0,32,32), Color.White);
                     }
-                    CountTime(250);
+                    CountTime(300);
                 }
             }
             if (openQuestUI == true)
@@ -429,6 +465,10 @@ namespace LETHIMCOOK
             if (openbookUI == true)
             {
                 _spriteBatch.Draw(bookUi, new Vector2(150, 0), new Rectangle(153, 0, 800, 500), Color.White);
+                for (int i = 0; i < MenuList.Count; i++)
+                {
+                    _spriteBatch.Draw(MenuList[i].foodTexBag, MenuList[i].foodRec, new Rectangle(189,160,32,32), Color.White);
+                }
                 if (OncursorxboxQ == false)
                 {
                     _spriteBatch.Draw(QuestUI, new Vector2(683, 20), new Rectangle(745 + 64, 81, 64, 40), Color.White);
@@ -443,7 +483,7 @@ namespace LETHIMCOOK
                 _spriteBatch.Draw(inventory, new Vector2(123, 125), Color.White);
                 for (int i = 0; i < BagList.Count; i++)
                 {
-                    _spriteBatch.Draw(BagList[i].foodTexBag,new Rectangle(153 + i * 53, 156, 32, 32), new Rectangle(0, 0, 32, 32), Color.White);
+                    _spriteBatch.Draw(BagList[i].foodTexBag, new Vector2( inventBox[i].X-7, inventBox[i].Y-93), new Rectangle(0, 0, 32, 32), Color.White);
                 }
                 if (closeXBox == false)
                 {
@@ -504,6 +544,8 @@ new Rectangle(0, 0, currentHeart + 10, 18), color);
                 {
                     countPopUp = 0;
                     IsPopUp = false;
+                    finsihcraft = false;
+                    GotMenu = true;
                     //ShowInventory = false;
 
                 }

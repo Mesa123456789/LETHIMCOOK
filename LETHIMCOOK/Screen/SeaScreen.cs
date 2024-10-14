@@ -12,6 +12,7 @@ using MonoGame.Extended.ViewportAdapters;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Input;
 using LETHIMCOOK.Sprite;
+using System.Diagnostics;
 
 
 namespace LETHIMCOOK.Screen
@@ -35,8 +36,9 @@ namespace LETHIMCOOK.Screen
         //Camera _camera;
         Game1 game;
         RectangleF Bounds = new RectangleF(new Vector2(780, 64), new Vector2(40, 60));
-        Texture2D _fish, popup, gotfish, fishing;
+        Texture2D _fish, popup,popup2, gotfish, fishing;
         Texture2D salmonmeat, redfishmeat, whalemeat, greenshimpmeat, pinkfishmeat, sharkmeat, shimpmeat , unimeat;
+        Texture2D dowfin, normalfish, octopus, salmon, shark, shimai, whale;
         public static List<Fish> BigFishList = new();
         public static List<Fish> SmallFishList = new();
         private Random _random;
@@ -48,7 +50,9 @@ namespace LETHIMCOOK.Screen
         //Tile_FrontRestaurant Tile_Wall_Frontres
         public SeaScreen(Game1 game, EventHandler theScreenEvent) : base(theScreenEvent)
         {
+            RestauarntScreen.IsCooking = false;
             popup = game.Content.Load<Texture2D>("interact");
+            popup2 = game.Content.Load<Texture2D>("popup");
             _fish = game.Content.Load<Texture2D>("fish");
             fishing = game.Content.Load<Texture2D>("fishing");
             gotfish = game.Content.Load<Texture2D>("gotfish");
@@ -61,14 +65,38 @@ namespace LETHIMCOOK.Screen
             sharkmeat = game.Content.Load<Texture2D>("ingre/sharkmeat");
             shimpmeat = game.Content.Load<Texture2D>("ingre/shimpmeat");
             unimeat = game.Content.Load<Texture2D>("ingre/unimeat");
-            SmallFishList.Add(new Fish("fish", _fish, redfishmeat, fishPos));
-            BigFishList.Add(new Fish("salmonmeat", _fish, salmonmeat, fishPos));
-            BigFishList.Add(new Fish("whalemeat", _fish, whalemeat, fishPos));
-            SmallFishList.Add(new Fish("greenshimpmeat", _fish, greenshimpmeat, fishPos));
-            BigFishList.Add(new Fish("pinkfishmeat", _fish, pinkfishmeat, fishPos));
-            BigFishList.Add(new Fish("sharkmeat", _fish, sharkmeat, fishPos));
-            SmallFishList.Add(new Fish("shimpmeat", _fish, shimpmeat, fishPos));
-            SmallFishList.Add(new Fish("unimeat", _fish, unimeat, fishPos));
+            //dowfin, normalfish, octopus, salmon, shark, shimai, whale;
+            dowfin = game.Content.Load<Texture2D>("_fish/dowfin");
+            normalfish = game.Content.Load<Texture2D>("_fish/normalfish");
+            octopus = game.Content.Load<Texture2D>("_fish/octopus");
+            salmon = game.Content.Load<Texture2D>("_fish/salmon");
+            shark = game.Content.Load<Texture2D>("_fish/shark");
+            shimai = game.Content.Load<Texture2D>("_fish/shimai");
+            whale = game.Content.Load<Texture2D>("_fish/whale");
+
+
+            SmallFishList.Add(new Fish(15, "redfish", _fish, redfishmeat, fishPos));
+            BigFishList.Add(new Fish(16,"salmon", salmon, salmonmeat, fishPos));
+            BigFishList.Add(new Fish(17,"whalemeat", whale, whalemeat, fishPos));
+            SmallFishList.Add(new Fish(18,"greenshimpmeat", _fish, greenshimpmeat, fishPos));
+            BigFishList.Add(new Fish(19,"pinkfishmeat", dowfin, pinkfishmeat, fishPos));
+            BigFishList.Add(new Fish(20,"sharkmeat", shark, sharkmeat, fishPos));
+            SmallFishList.Add(new Fish(21,"shimpmeat", _fish, shimpmeat, fishPos));
+            SmallFishList.Add(new Fish(22,"unimeat", shimai, unimeat, fishPos));
+            //***new
+            SmallFishList.Add(new Fish(15, "shimai", shimai, shimai, fishPos));
+            BigFishList.Add(new Fish(15, "octopus", octopus, octopus, fishPos));
+            ////***สุตรโกง
+            Game1.BagList.Add(new Fish(15, "octopus", octopus, octopus, fishPos));
+            Game1.BagList.Add(new Fish(16, "salmon", salmon, salmonmeat, fishPos));
+            Game1.BagList.Add(new Fish(17, "whalemeat", whale, whalemeat, fishPos));
+            Game1.BagList.Add(new Fish(18, "greenshimpmeat", _fish, greenshimpmeat, fishPos));
+            Game1.BagList.Add(new Fish(19, "pinkfishmeat", dowfin, pinkfishmeat, fishPos));
+            Game1.BagList.Add(new Fish(20, "sharkmeat", shark, sharkmeat, fishPos));
+            Game1.BagList.Add(new Fish(21, "shimpmeat", _fish, shimpmeat, fishPos));
+            Game1.BagList.Add(new Fish(22, "unimeat", shimai, unimeat, fishPos));
+            Game1.BagList.Add(new Fish(22, "shimai", shimai, shimai, fishPos));
+            Game1.BagList.Add(new Fish(22, "redfish", redfishmeat, redfishmeat, fishPos));
 
             var viewportadapter = new BoxingViewportAdapter(game.Window, game.GraphicsDevice, 800, 450);
             Game1._camera = new OrthographicCamera(viewportadapter);//******//
@@ -186,6 +214,7 @@ namespace LETHIMCOOK.Screen
                         var caughtFish = BigFishList[bigFishIndex];
                         Food.OntableAble = true;
                         Game1.BagList.Add(caughtFish);
+                        getfish = true;
                         Game1.IsPopUp = true;
                         Console.WriteLine("Big Fish Caught!");
                     }
@@ -194,18 +223,16 @@ namespace LETHIMCOOK.Screen
                         int smallFishIndex = _random.Next(0,SmallFishList.Count);
                         var caughtFish = SmallFishList[smallFishIndex];
                         Food.OntableAble = true;
+                        getfish = true;
                         Game1.BagList.Add(caughtFish);
                         Game1.IsPopUp = true;
                         Console.WriteLine("Small Fish Caught!");
                     }
-                    getfish = true;
+                    
                 }
 
             }
-            else
-            {
-                getfish = false;
-            }
+
             for (int i = Game1.enemyList.Count - 1; i >= 0; i--)
             {
                 player.Attack(Game1.enemyList[i]);
@@ -282,14 +309,36 @@ namespace LETHIMCOOK.Screen
             {
                 _spriteBatch.Draw(fishing, new Vector2(player.Bounds.Position.X, player.Bounds.Position.Y + 40), new Rectangle(32 * frame, 0, 32, 150), Color.White, 0.0f, new Vector2(0,0), 1.0f, SpriteEffects.None, 0.0f);
             }
-            if (getfish == true)
+
+            foreach (Food food in Game1.BagList)
             {
-                _spriteBatch.Draw(gotfish,new Rectangle((int)player.Bounds.Position.X, (int)player.Bounds.Position.Y - 20, 32,32),Color.White);
+                if (getfish == true)
+                {
+                    for (int i = 0; i < Game1.BagList.Count; i++)
+                    {
+                        _spriteBatch.Draw(popup2, new Rectangle((int)player.Bounds.Position.X-10, (int)player.Bounds.Position.Y - 42,40,40) , Color.White);
+                        _spriteBatch.Draw(Game1.BagList[i].foodTexture, new Rectangle((int)player.Bounds.Position.X-5, (int)player.Bounds.Position.Y-40, 32, 32), Color.White);
+                    }
+                }
+                CountTime(250);
             }
-  
-            
 
 
+
+
+        }
+        int countPopUp;
+        public void CountTime(int timePopup)
+        {
+            countPopUp += 1;
+            {
+                if (countPopUp > timePopup)
+                {
+                    countPopUp = 0;
+                    getfish = false;
+
+                }
+            }
         }
         public int frame;
         public int framePerSec;

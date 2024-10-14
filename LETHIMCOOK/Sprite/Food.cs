@@ -19,6 +19,7 @@ namespace LETHIMCOOK.Sprite
     {
         public Vector2 foodPosition;
         public RectangleF foodBox;
+        public Rectangle foodRec;
         public Texture2D foodTexture;
         public Texture2D foodTexBag;
         public int getFood;
@@ -32,12 +33,32 @@ namespace LETHIMCOOK.Sprite
         public bool istrue;
         public int id;
 
+        public Food(Texture2D foodTexBag, Rectangle foodRec)
+        {
+            
+            this.foodTexBag = foodTexBag;
+            this.foodRec = foodRec;
+        }
         public Food(int id,string name, Texture2D foodTexture, bool Istrue)
         {
             this.id = id;
             this.name = name;
             this.foodTexture = foodTexture;
             istrue = Istrue;
+        }
+        public Food(string name, Texture2D foodTexBag, Vector2 foodPosition)
+        {
+            this.name = name;
+            this.foodTexBag = foodTexBag;
+            this.foodPosition = foodPosition;
+        }
+        public Food(string name, Texture2D foodTexBag, bool Istrue , Vector2 foodPosition , Rectangle foodRec)
+        {
+            this.name = name;
+            this.foodTexBag = foodTexBag;
+            istrue = Istrue;
+            this.foodPosition = foodPosition;
+            this.foodRec = foodRec;
         }
         public Food(string name,Texture2D foodTexture, Texture2D foodTexBag ,Vector2 foodPosition)
         {
