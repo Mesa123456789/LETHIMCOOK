@@ -299,11 +299,6 @@ namespace LETHIMCOOK
             {
                 IssendMenuInterect = false;
             }
-            if (sendingMenu == true)
-            {
-                getUni = false;
-                MenuList.Add(new Food(Uni,new Rectangle(0,0,128,128)));
-            }
             if (rotationMenuBG < 360)
             {
                 rotationMenuBG++;
@@ -333,27 +328,7 @@ namespace LETHIMCOOK
                 }
 
             }
-            if (Ontable == true)
-            {
-                _spriteBatch.Draw(craft, new Vector2(215, 60), Color.White);
-                _spriteBatch.Draw(inventory, new Vector2(129, 220), Color.White);
-                // _spriteBatch.Draw(popup, craftBox, Color.White);
-                for (int i = 0; i < CraftList.Count; i++)
-                {
-                    _spriteBatch.Draw(CraftList[i].foodTexBag, new Vector2(287 + i * 69, 95), new Rectangle(0, 0, 32, 32), Color.White);
-                }
-                for (int i = 0; i < BagList.Count; i++)
-                {
-                    _spriteBatch.Draw(BagList[i].foodTexBag, inventBox[i] , new Rectangle(0,0, 32, 32), Color.White);
-                }
-                if (getUni == true && finsihcraft == true)
-                {
-                    _spriteBatch.Draw(QuestUI, new Vector2(333, 110), new Rectangle(725, 133, 200, 190), Color.White);
-                    _spriteBatch.Draw(Uni, new Rectangle(343,120,128,128), Color.White);
-                    //_spriteBatch.Draw(QuestUI, new Vector2(720, 320), new Rectangle(725, 133, 146, 190), Color.White, rotationMenuBG , Vector2.Zero, 1f, 0, 1);
-                }
-                CountTime(200);
-            }
+           
         }
         public void UpDateUI()
         {
@@ -434,10 +409,10 @@ namespace LETHIMCOOK
         int mouse_state = 1;
         public void DrawUiGameplay(SpriteBatch _spriteBatch)
         {
-            for (int i = 0; i < MenuList.Count; i++)
-            {
-                _spriteBatch.Draw(MenuList[i].foodTexBag, MenuList[i].foodRec, new Rectangle(189, 160, 32, 32), Color.White);
-            }
+            //for (int i = 0; i < MenuList.Count; i++)
+            //{
+            //    _spriteBatch.Draw(MenuList[i].foodTexBag, MenuList[i].foodRec, new Rectangle(189, 160, 32, 32), Color.White);
+            //}
             foreach (Food food in BagList)
             {
                 if (IsPopUp == true)
@@ -446,6 +421,10 @@ namespace LETHIMCOOK
                     {
                         _spriteBatch.Draw(popup, new Vector2(635, 170), Color.White);
                         _spriteBatch.Draw(BagList[i].foodTexBag, new Rectangle(653, 180, 32,32), new Rectangle(0,0,32,32), Color.White);
+                        //if(BagList[i].Two == true)
+                        //{
+                        //    _spriteBatch.Draw(BagList[i].foodTexBag2, new Rectangle(653 + 40, 180, 32, 32), new Rectangle(0, 0, 32, 32), Color.White);
+                        //}
                     }
                     CountTime(300);
                 }
@@ -484,6 +463,10 @@ namespace LETHIMCOOK
                 for (int i = 0; i < BagList.Count; i++)
                 {
                     _spriteBatch.Draw(BagList[i].foodTexBag, new Vector2( inventBox[i].X-7, inventBox[i].Y-93), new Rectangle(0, 0, 32, 32), Color.White);
+                    //if(BagList[i].Two == true)
+                    //{
+                    //    _spriteBatch.Draw(BagList[i].foodTexBag2, new Vector2(inventBox[i].X - 7 + 40, inventBox[i].Y - 93), new Rectangle(0, 0, 32, 32), Color.White);
+                    //}
                 }
                 if (closeXBox == false)
                 {
@@ -515,26 +498,6 @@ new Rectangle(0, 0, currentHeart + 10, 18), color);
             SpriteTexture.DrawFrame(_spriteBatch, new Vector2(23, 25), 1);
 
         }
-
-        public void OnCraftBox()
-        {
-            Rectangle invent1 = new Rectangle(158, 250, 35, 35);
-            Rectangle invent2 = new Rectangle(210, 250, 35, 35);
-            MouseState ms = Mouse.GetState();
-            mouseRec = new RectangleF(ms.X, ms.Y, 50, 50);
-            if (mouseRec.Intersects(invent1) && ms.LeftButton == ButtonState.Pressed && Ontable)
-            {
-                Console.WriteLine("intersect0!");
-                CraftList.Add(BagList[0]);
-                BagList.RemoveAt(0);
-            }
-            //if (mouseRec.Intersects(invent2) && ms.LeftButton == ButtonState.Pressed && Ontable)
-            //{
-            //    Console.WriteLine("intersect0!");
-            //    CraftList.Add(BagList[1]);
-            //    BagList.RemoveAt(1);
-            //}
-        }
         public int countPopUp;
         public void CountTime(int timePopup)
         {
@@ -544,9 +507,6 @@ new Rectangle(0, 0, currentHeart + 10, 18), color);
                 {
                     countPopUp = 0;
                     IsPopUp = false;
-                    finsihcraft = false;
-                    GotMenu = true;
-                    //ShowInventory = false;
 
                 }
             }

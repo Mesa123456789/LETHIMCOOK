@@ -20,7 +20,7 @@ namespace LETHIMCOOK.Sprite
         public Vector2 foodPosition;
         public RectangleF foodBox;
         public Rectangle foodRec;
-        public Texture2D foodTexture;
+        public Texture2D foodTexture, foodTexBag2;
         public Texture2D foodTexBag;
         public int getFood;
         public static bool OntableAble;
@@ -31,8 +31,14 @@ namespace LETHIMCOOK.Sprite
         Vector2 playerPos;
         public string name;
         public bool istrue;
+        public bool Two;
         public int id;
-
+        public Food(int id, string name, bool Istrue)
+        {
+            this.id = id;
+            this.name = name;
+            istrue = Istrue;
+        }
         public Food(Texture2D foodTexBag, Rectangle foodRec)
         {
             
@@ -66,6 +72,19 @@ namespace LETHIMCOOK.Sprite
             this.foodTexture = foodTexture;
             this.foodTexBag = foodTexBag;
             this.foodPosition = foodPosition;
+            foodBox = new RectangleF((int)foodPosition.X, (int)foodPosition.Y, 50, 50);
+            OntableAble = false;
+            player = new Player(SpriteTexture, playerPos, game, Bounds);
+
+        }
+        public Food(string name, Texture2D foodTexture, Texture2D foodTexBag, Texture2D foodTexBag2, Vector2 foodPosition , bool Two)
+        {
+            this.name = name;
+            this.foodTexture = foodTexture;
+            this.foodTexBag2 = foodTexBag2;
+            this.foodTexBag = foodTexBag;
+            this.foodPosition = foodPosition;
+            this.Two = Two;
             foodBox = new RectangleF((int)foodPosition.X, (int)foodPosition.Y, 50, 50);
             OntableAble = false;
             player = new Player(SpriteTexture, playerPos, game, Bounds);

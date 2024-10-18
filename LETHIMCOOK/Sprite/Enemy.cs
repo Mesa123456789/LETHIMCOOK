@@ -25,13 +25,13 @@ namespace LETHIMCOOK.Sprite
         public float timePerFream;
         bool isHit;
         Texture2D texture;
-        Texture2D enemyTexbag;
+        Texture2D enemyTexbag, enemyTexbag2;
         public Vector2 enemyPosition;
         private double hitCooldown = 2.0; // Cooldown period in seconds
         private double lastHitTime = 0;
         int countDamage;
         int enemyHp = 3;
-        bool istrue;
+        bool istrue,Two;
         int id;
 
         public Enemy(int id, string name, Texture2D enemyTexbag, bool Istrue) : base(id, name, enemyTexbag, Istrue)
@@ -50,7 +50,15 @@ namespace LETHIMCOOK.Sprite
             framePerSec = 7;
             timePerFream = (float)1 / framePerSec;
             frame = 0;
-            
+        }
+        public Enemy(string name, Texture2D enemytex, Texture2D enemyTexbag, Texture2D enemyTexbag2, Vector2 foodPosition, bool Two) : base(name, enemytex, enemyTexbag, enemyTexbag, foodPosition,Two)
+        {
+            this.name = name;
+            texture = enemytex;
+            this.enemyTexbag = enemyTexbag;
+            this.enemyTexbag2 = enemyTexbag2;
+            this.enemyPosition = foodPosition;
+            this.foodPosition = foodPosition;
         }
         RectangleF mouseRec;
         Vector2 mousepos;

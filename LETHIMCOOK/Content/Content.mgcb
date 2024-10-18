@@ -869,6 +869,18 @@
 /processorParam:TextureFormat=Color
 /build:ingre/pork.png
 
+#begin ingre/purpledimon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ingre/purpledimon.png
+
 #begin ingre/rainbowsmilemeat.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -989,18 +1001,6 @@
 /processorParam:TextureFormat=Color
 /build:ingre/sheepmeat.png
 
-#begin ingre/shimpmeat.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:ingre/shimpmeat.png
-
 #begin ingre/shumai.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1024,18 +1024,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:ingre/smileeggs.png
-
-#begin ingre/snailmeat.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:ingre/snailmeat.png
 
 #begin ingre/stone.png
 /importer:TextureImporter
@@ -1132,18 +1120,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:ingre/wipcream.png
-
-#begin ingre/อัญมนี.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:ingre/อัญมนี.png
 
 #begin Inrestaurant.png
 /importer:TextureImporter

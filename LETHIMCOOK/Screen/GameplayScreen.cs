@@ -15,6 +15,7 @@ using LETHIMCOOK.Sprite;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 using System.ComponentModel;
+using System.Net.NetworkInformation;
 
 
 namespace LETHIMCOOK.Screen
@@ -36,7 +37,7 @@ namespace LETHIMCOOK.Screen
         Texture2D foodTexture,crabmeat;
         Texture2D hippo,hippomeat;
         Texture2D chicken,chickenmeat;
-        Texture2D rat, cheese;
+        Texture2D rat, cheese,pig,pork;
         Texture2D slime, rainbowsmilemeat;
         Texture2D pinkslime, pinksmilemeat;
         Texture2D icebear , wipcream;
@@ -52,7 +53,6 @@ namespace LETHIMCOOK.Screen
 Vector2 playerPos;// = new Vector2(player.Bounds.Position.X, player.Bounds.Position.Y);
         public GameplayScreen(Game1 game, EventHandler theScreenEvent ) : base(theScreenEvent)
         {
-            RestauarntScreen.IsCooking = false;
             coriander = game.Content.Load<Texture2D>("ingre/coriander");
             grass = game.Content.Load<Texture2D>("ingre/grass");
             greendimon = game.Content.Load<Texture2D>("ingre/greendimon");
@@ -68,13 +68,15 @@ Vector2 playerPos;// = new Vector2(player.Bounds.Position.X, player.Bounds.Posit
             stone = game.Content.Load<Texture2D>("ingre/stone");
             suki = game.Content.Load<Texture2D>("ingre/suki");
             tempura = game.Content.Load<Texture2D>("ingre/tempura");
-            //purpledimon = game.Content.Load<Texture2D>("ingre/อัญมณี");
+            purpledimon = game.Content.Load<Texture2D>("ingre/purpledimon");
             //***new
             popup = game.Content.Load<Texture2D>("popup");
             foodTexture = game.Content.Load<Texture2D>("crab");
             pinkslime = game.Content.Load<Texture2D>("pinksmaile");
             hippo = game.Content.Load<Texture2D>("hippo");
             chicken = game.Content.Load<Texture2D>("chicken");
+            pig = game.Content.Load<Texture2D>("pig");
+            pork = game.Content.Load<Texture2D>("ingre/pork");
             rat = game.Content.Load<Texture2D>("rat");
             slime = game.Content.Load<Texture2D>("slime");
             icebear = game.Content.Load<Texture2D>("icebear");
@@ -98,13 +100,14 @@ Vector2 playerPos;// = new Vector2(player.Bounds.Position.X, player.Bounds.Posit
             //jellyfish = game.Content.Load<Texture2D>("jellyfish");
             Game1.enemyList.Add(new Enemy(8,"crab", foodTexture, crabmeat, new Vector2(550, 250)));
             Game1.enemyList.Add(new Enemy(9,"pinksmaile",pinkslime, pinksmilemeat, new Vector2(200, 400)));
-            Game1.enemyList.Add(new Enemy(10, "hippo", hippo, hippomeat, new Vector2(300 + 100, 300)));
+            Game1.enemyList.Add(new Enemy(10,"hippo", hippo, hippowing, new Vector2(300 + 100, 600)));
             Game1.enemyList.Add(new Enemy(11, "chicken", chicken, chickenmeat, new Vector2(150 + 100, 150)));
             Game1.enemyList.Add(new Enemy(12, "rat", rat, cheese, new Vector2(300 + 100, 200)));
             Game1.enemyList.Add(new Enemy(13, "slime",slime, rainbowsmilemeat,new Vector2(380 + 100, 330)));
             Game1.enemyList.Add(new Enemy(14, "icebear", icebear, wipcream, new Vector2(230 + 100, 260)));
             //***new
-            Game1.enemyList.Add(new Enemy(14, "jellyfish", jellyfish, jeelyfishmeat, new Vector2(230 + 100, 260)));
+            Game1.enemyList.Add(new Enemy(14, "jellyfish", jellyfish, jeelyfishmeat, new Vector2(230 + 200, 280)));
+            Game1.enemyList.Add(new Enemy(14, "pig", pig, pork, new Vector2(230 + 200, 260)));
             //// Texture2D coriander, grass, greendimon,**** hippowing, jeelyfishmeat, lemon, ****meatball;
             ///  Texture2D Mendrek, noodle, pinkdimon, seafood, shumai,**** smileeggs;
            ///// Texture2D stone, suki, tempura, purpledimon;
@@ -117,27 +120,30 @@ Vector2 playerPos;// = new Vector2(player.Bounds.Position.X, player.Bounds.Posit
             Game1.foodList.Add(new Food("pinkdimon", pinkdimon, pinkdimon, new Vector2(194, 594)));
             Game1.foodList.Add(new Food("shumai", shumai, shumai, new Vector2(250, 600)));
             Game1.foodList.Add(new Food("stone", stone, stone, new Vector2(260, 594)));
-            ///Game1.foodList.Add(new Food("purpledimon", purpledimon, new Vector2(270, 600)));
             Game1.foodList.Add(new Food("tempura", tempura, tempura, new Vector2(249, 600)));
             Game1.foodList.Add(new Food("icecream", icecream, icecream, new Vector2(249, 655)));
+            Game1.foodList.Add(new Food("purpledimon", purpledimon, purpledimon, new Vector2(270, 600)));
 
             Game1.seasoningList.Add(new Food("suki", suki, false, new Vector2(271 + (52 * 3)), new Rectangle(271 + (52 * 3), 237, 32, 32)));
             Game1.seasoningList.Add(new Food("seafood", seafood, false, new Vector2(271 + (52 * 4)), new Rectangle(271 + (52 * 4), 237, 32, 32)));
 
-            Game1.BagList.Add(new Enemy(14, "jellyfish", jellyfish, jeelyfishmeat, new Vector2(230 + 100, 260)));
-            Game1.BagList.Add(new Food("coriander", coriander, coriander, new Vector2(1115, 594)));
-            Game1.BagList.Add(new Food("grass", grass, grass, new Vector2(1230, 545)));
-            Game1.BagList.Add(new Food("greendimon", greendimon, greendimon, new Vector2(1005, 480)));
-            Game1.BagList.Add(new Food("lemon", lemon, lemon, new Vector2(1400, 594)));
-            Game1.BagList.Add(new Food("Mendrek", Mendrek, Mendrek, new Vector2(1280, 720)));
-            Game1.BagList.Add(new Food("noodle", noodle, noodle, new Vector2(182, 649)));
-            Game1.BagList.Add(new Food("pinkdimon", pinkdimon, pinkdimon, new Vector2(194, 594)));
-            Game1.BagList.Add(new Food("shumai", shumai, shumai, new Vector2(250, 600)));
-            Game1.BagList.Add(new Food("stone", stone, stone, new Vector2(260, 594)));
-            Game1.BagList.Add(new Food("tempura", tempura, tempura, new Vector2(249, 600)));
-            Game1.BagList.Add(new Food("suki", suki, false, new Vector2(271 + (52 * 3)), new Rectangle(271 + (52 * 3), 237, 32, 32)));
-            Game1.BagList.Add(new Food("seafood", seafood, false, new Vector2(271 + (52 * 4)), new Rectangle(271 + (52 * 4), 237, 32, 32)));
-            Game1.BagList.Add(new Food("icecream", icecream, icecream, new Vector2(249, 600)));
+            //Game1.BagList.Add(new Enemy(14, "jellyfish", jellyfish, jeelyfishmeat, new Vector2(230 + 100, 260)));
+            //Game1.BagList.Add(new Food("coriander", coriander, coriander, new Vector2(1115, 594)));
+            //Game1.BagList.Add(new Food("grass", grass, grass, new Vector2(1230, 545)));
+            //Game1.BagList.Add(new Food("greendimon", greendimon, greendimon, new Vector2(1005, 480)));
+            //Game1.BagList.Add(new Food("lemon", lemon, lemon, new Vector2(1400, 594)));
+            //Game1.BagList.Add(new Food("Mendrek", Mendrek, Mendrek, new Vector2(1280, 720)));
+            //Game1.BagList.Add(new Food("noodle", noodle, noodle, new Vector2(182, 649)));
+            //Game1.BagList.Add(new Food("pinkdimon", pinkdimon, pinkdimon, new Vector2(194, 594)));
+            //Game1.BagList.Add(new Food("shumai", shumai, shumai, new Vector2(250, 600)));
+            //Game1.BagList.Add(new Food("stone", stone, stone, new Vector2(260, 594)));
+            //Game1.BagList.Add(new Food("tempura", tempura, tempura, new Vector2(249, 600)));
+            //Game1.BagList.Add(new Food("suki", suki, false, new Vector2(271 + (52 * 3)), new Rectangle(271 + (52 * 3), 237, 32, 32)));
+            //Game1.BagList.Add(new Food("seafood", seafood, false, new Vector2(271 + (52 * 4)), new Rectangle(271 + (52 * 4), 237, 32, 32)));
+            //Game1.BagList.Add(new Food("icecream", icecream, icecream, new Vector2(249, 600)));
+            //Game1.BagList.Add(new Enemy(14, "pig", pig, pork, new Vector2(230 + 200, 260)));
+            //Game1.BagList.Add(new Food("purpledimon", purpledimon, purpledimon, new Vector2(194, 594)));
+            //Game1.BagList.Add(new Enemy(14, "pig", pig, pork, new Vector2(230 + 200, 260)));
 
 
 
@@ -203,6 +209,7 @@ Vector2 playerPos;// = new Vector2(player.Bounds.Position.X, player.Bounds.Posit
             if (player.Bounds.Intersects(doorRec) && !EnterDoor)
             {
                 EnterDoor = true;
+                RestauarntScreen.IsCooking = true;
                 ScreenEvent.Invoke(game.RestauarntScreen, new EventArgs());
                 return;
             }

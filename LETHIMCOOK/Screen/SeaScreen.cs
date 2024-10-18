@@ -63,7 +63,6 @@ namespace LETHIMCOOK.Screen
             greenshimpmeat = game.Content.Load<Texture2D>("ingre/greenshimpmeat");
             pinkfishmeat = game.Content.Load<Texture2D>("ingre/pinkfishmeat");
             sharkmeat = game.Content.Load<Texture2D>("ingre/sharkmeat");
-            shimpmeat = game.Content.Load<Texture2D>("ingre/shimpmeat");
             unimeat = game.Content.Load<Texture2D>("ingre/unimeat");
             //dowfin, normalfish, octopus, salmon, shark, shimai, whale;
             dowfin = game.Content.Load<Texture2D>("_fish/dowfin");
@@ -81,22 +80,23 @@ namespace LETHIMCOOK.Screen
             SmallFishList.Add(new Fish(18,"greenshimpmeat", _fish, greenshimpmeat, fishPos));
             BigFishList.Add(new Fish(19,"pinkfishmeat", dowfin, pinkfishmeat, fishPos));
             BigFishList.Add(new Fish(20,"sharkmeat", shark, sharkmeat, fishPos));
-            SmallFishList.Add(new Fish(21,"shimpmeat", _fish, shimpmeat, fishPos));
+            SmallFishList.Add(new Fish(21,"shimpmeat", _fish, greenshimpmeat, fishPos));
             SmallFishList.Add(new Fish(22,"unimeat", shimai, unimeat, fishPos));
             //***new
             SmallFishList.Add(new Fish(15, "shimai", shimai, shimai, fishPos));
             BigFishList.Add(new Fish(15, "octopus", octopus, octopus, fishPos));
             ////***สุตรโกง
-            Game1.BagList.Add(new Fish(15, "octopus", octopus, octopus, fishPos));
+            Game1.BagList.Add(new Fish(15, "redfish", salmon, redfishmeat, fishPos));
             Game1.BagList.Add(new Fish(16, "salmon", salmon, salmonmeat, fishPos));
             Game1.BagList.Add(new Fish(17, "whalemeat", whale, whalemeat, fishPos));
             Game1.BagList.Add(new Fish(18, "greenshimpmeat", _fish, greenshimpmeat, fishPos));
             Game1.BagList.Add(new Fish(19, "pinkfishmeat", dowfin, pinkfishmeat, fishPos));
             Game1.BagList.Add(new Fish(20, "sharkmeat", shark, sharkmeat, fishPos));
-            Game1.BagList.Add(new Fish(21, "shimpmeat", _fish, shimpmeat, fishPos));
+            Game1.BagList.Add(new Fish(21, "shimpmeat", _fish, greenshimpmeat, fishPos));
             Game1.BagList.Add(new Fish(22, "unimeat", shimai, unimeat, fishPos));
             Game1.BagList.Add(new Fish(22, "shimai", shimai, shimai, fishPos));
-            Game1.BagList.Add(new Fish(22, "redfish", redfishmeat, redfishmeat, fishPos));
+            Game1.BagList.Add(new Fish(22, "octopus", octopus, octopus, fishPos));
+
 
             var viewportadapter = new BoxingViewportAdapter(game.Window, game.GraphicsDevice, 800, 450);
             Game1._camera = new OrthographicCamera(viewportadapter);//******//
