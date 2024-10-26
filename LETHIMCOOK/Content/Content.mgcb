@@ -122,6 +122,18 @@
 /processorParam:TextureFormat=Color
 /build:bag.png
 
+#begin Board_.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Board_.png
+
 #begin Board.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -133,6 +145,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Board.png
+
+#begin BoardInteract.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:BoardInteract.png
 
 #begin book.png
 /importer:TextureImporter
@@ -1185,6 +1209,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:map.png
+
+#begin menugame (1).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:menugame (1).png
+
+#begin menugame (2).png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:menugame (2).png
 
 #begin mushroom1.png
 /importer:TextureImporter

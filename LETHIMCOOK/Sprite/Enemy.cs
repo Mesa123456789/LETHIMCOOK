@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
+using MonoGame.Extended.Collisions;
+using MonoGame.Extended.ECS;
 using MonoGame.Extended.ViewportAdapters;
 using System;
 using System.Collections.Generic;
@@ -16,63 +18,53 @@ using System.Xml.Linq;
 namespace LETHIMCOOK.Sprite
 
 {
-    public class Enemy : Food
+    public class Enemy : IEntity, ICollisionActor
     {
         Game1 game;
-        public int frame;
-        public int framePerSec;
+        public string name;
+        public int frame = 0;
+        public int framePerSec = 7;
         public float totalElapsed;
-        public float timePerFream;
+        public float timePerFream = (float)1 / 7;
         bool isHit;
         Texture2D texture;
-        Texture2D enemyTexbag, enemyTexbag2;
+        Food[] droppedFood;
         public Vector2 enemyPosition;
         private double hitCooldown = 2.0; // Cooldown period in seconds
         private double lastHitTime = 0;
         int countDamage;
         int enemyHp = 3;
-        bool istrue,Two;
-        int id;
+        public IShapeF Bounds { get; }
+        
+        public Enemy(string name, Texture2D enemytex, Food[] droppedFood)
+        {
+            this.name = name;
+            texture = enemytex;
+            this.droppedFood = droppedFood;
+            
+        }
+        public Enemy(string name,Texture2D enemytex, Food[] droppedFood, Vector2 enemyPosition)
+        {
+            this.name = name;
+            texture = enemytex;
+            this.droppedFood = droppedFood;
+            this.enemyPosition = enemyPosition;
+            Bounds = new RectangleF(new Vector2(enemyPosition.X, enemyPosition.Y), new Vector2(32, 32));
+        }
 
-        public Enemy(int id, string name, Texture2D enemyTexbag, bool Istrue) : base(id, name, enemyTexbag, Istrue)
-        {
-            this.id = id;
-            this.name = name;
-            this.enemyTexbag = enemyTexbag;
-            istrue = Istrue;
-        }
-        public Enemy(int id, string name,Texture2D enemytex, Texture2D enemyTexbag, Vector2 foodPosition) : base(name,enemytex, enemyTexbag, foodPosition)
-        {
-            this.id = id;
-            texture = enemytex;
-            this.enemyTexbag = enemyTexbag;
-            this.enemyPosition = foodPosition;
-            framePerSec = 7;
-            timePerFream = (float)1 / framePerSec;
-            frame = 0;
-        }
-        public Enemy(string name, Texture2D enemytex, Texture2D enemyTexbag, Texture2D enemyTexbag2, Vector2 foodPosition, bool Two) : base(name, enemytex, enemyTexbag, enemyTexbag, foodPosition,Two)
-        {
-            this.name = name;
-            texture = enemytex;
-            this.enemyTexbag = enemyTexbag;
-            this.enemyTexbag2 = enemyTexbag2;
-            this.enemyPosition = foodPosition;
-            this.foodPosition = foodPosition;
-        }
         RectangleF mouseRec;
         Vector2 mousepos;
         Vector2 posMouse;
         RectangleF mouseCheck; 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             ///แยกเมธอดแต่ละscreen
             MouseState mouseSt = Mouse.GetState();
-            if (foodBox.Intersects(GameplayScreen.player.Bounds) && !isHit)
+            if (Bounds.Intersects(GameplayScreen.player.Bounds) && !isHit)
             {
                 Game1.currentHeart -= 10;
                 isHit = true;
-                if (mouseSt.LeftButton == ButtonState.Pressed && foodBox.Intersects(GameplayScreen.player.Bounds))
+                if (mouseSt.LeftButton == ButtonState.Pressed && Bounds.Intersects(GameplayScreen.player.Bounds))
                 {
                     // isCheck = true;
                     OnCollision();
@@ -92,29 +84,35 @@ namespace LETHIMCOOK.Sprite
                     }
                 }
             }
-            foodBox = new RectangleF((int)foodPosition.X, (int)foodPosition.Y, 50, 50);
+            
             UpdateFream((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         bool isCheck;
-        public override void Draw(SpriteBatch batch)
+        public void Draw(SpriteBatch batch)
         {
-            batch.Draw(texture, foodPosition, new Rectangle(32 * frame, 0, 32, 32), Color.White, 0.0f, new Vector2(16, 16), 2.0f, SpriteEffects.None, 0.0f);
-        }
-        public override void DrawBag(SpriteBatch batch)
-        {
-            batch.Draw(enemyTexbag, foodPosition, new Rectangle(0, 0, 32, 32), Color.White);
+            batch.Draw(texture, enemyPosition, new Rectangle(32 * frame, 0, 32, 32), Color.White, 0.0f, new Vector2(16, 16), 2.0f, SpriteEffects.None, 0.0f);
         }
 
-        public override void OnCollision()
+        public void OnCollision()
         {
-            OntableAble = true;
-            Game1.BagList.Add(this);
+            for (int i = 0; i < droppedFood.Length; i++)
+            {
+                Game1.BagList.Add(droppedFood[i]);
+            }
             Game1.IsPopUp = true;
             foreach (Enemy enemy in Game1.enemyList)
             {
                 Game1.enemyList.Remove(this);
                 break;
+            }
+
+        }
+        public void OnCollision(CollisionEventArgs collisionInfo)
+        {
+            if (collisionInfo.Other.ToString().Contains("PlatformEntity"))
+            {
+                Bounds.Position -= collisionInfo.PenetrationVector;
             }
 
         }

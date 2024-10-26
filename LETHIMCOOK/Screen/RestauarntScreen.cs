@@ -194,20 +194,25 @@ namespace LETHIMCOOK.Screen
         ///**bool food
         bool getPongneng =false;
         bool onRandom = true;
-        public override void Update(GameTime theTime)
+        public void RandomQuest()
         {
             bool onQuest = randomQuest.Next(0, 2) == 0;
-            if(onQuest && onRandom)
+            if (onQuest && onRandom)
             {
-                for(int i = 0; i < 1; i++)
+                onRandom = true;
+                for (int i = 0; i < 1; i++)
                 {
                     int getQuest = randomQuest.Next(0, QuestList.Count);
                     QuestList[getQuest] = true;
                     Console.WriteLine(QuestList[getQuest]);
                     Console.WriteLine(getQuest);
                     onRandom = false;
-                } 
+                }
             }
+        }
+        public override void Update(GameTime theTime)
+        {
+            
 
             if (player.Bounds.Intersects(doorRec) && !GameplayScreen.EnterDoor)
             {
@@ -436,9 +441,10 @@ namespace LETHIMCOOK.Screen
             if (Game1.sendingMenu == true)
             {
                 getUni = false;
-                onRandom = true;
+                RandomQuest();
                 Game1.MenuList.Add(new Food(uni, new Rectangle(0, 0, 128, 128)));
             }
+            RandomQuest();
 
             foreach (IEntity entity in _entities)
             {

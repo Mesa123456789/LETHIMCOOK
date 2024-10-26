@@ -76,6 +76,7 @@ namespace LETHIMCOOK
         protected override void Initialize()
         {
             GotMenu = false;
+            onMenu = false;
             base.Initialize();
         }
         public static int currentHeart;
@@ -117,26 +118,26 @@ namespace LETHIMCOOK
             inventBox.Add(new Vector2(161 + (52 * 7), 250));
             inventBox.Add(new Vector2(161 + (52 * 8), 250));
             inventBox.Add(new Vector2(161 + (52 * 9), 250));
-            inventBox.Add(new Vector2(161, 310));
-            inventBox.Add(new Vector2(161 + 52, 310));
-            inventBox.Add(new Vector2(161 + (52 * 2), 310));
-            inventBox.Add(new Vector2(161 + (52 * 3), 310));
-            inventBox.Add(new Vector2(161 + (52 * 4), 310));
-            inventBox.Add(new Vector2(161 + (52 * 5), 310));
-            inventBox.Add(new Vector2(161 + (52 * 6), 310));
-            inventBox.Add(new Vector2(161 + (52 * 7), 310));
-            inventBox.Add(new Vector2(161 + (52 * 8), 310));
-            inventBox.Add(new Vector2(161 + (52 * 9), 310));
-            inventBox.Add(new Vector2(161 , 366));
-            inventBox.Add(new Vector2(161 + 52, 366));
-            inventBox.Add(new Vector2(161 + (52 * 2), 366));
-            inventBox.Add(new Vector2(161 + (52 * 3), 366));
-            inventBox.Add(new Vector2(161 + (52 * 4), 366));
-            inventBox.Add(new Vector2(161 + (52 * 5), 366));
-            inventBox.Add(new Vector2(161 + (52 * 6), 366));
-            inventBox.Add(new Vector2(161 + (52 * 7), 366));
-            inventBox.Add(new Vector2(161 + (52 * 8), 366));
-            inventBox.Add(new Vector2(161 + (52 * 9), 366));
+            inventBox.Add(new Vector2(161, 305));
+            inventBox.Add(new Vector2(161 + 52, 305));
+            inventBox.Add(new Vector2(161 + (52 * 2), 305));
+            inventBox.Add(new Vector2(161 + (52 * 3), 305));
+            inventBox.Add(new Vector2(161 + (52 * 4), 305));
+            inventBox.Add(new Vector2(161 + (52 * 5), 305));
+            inventBox.Add(new Vector2(161 + (52 * 6), 305));
+            inventBox.Add(new Vector2(161 + (52 * 7), 305));
+            inventBox.Add(new Vector2(161 + (52 * 8), 305));
+            inventBox.Add(new Vector2(161 + (52 * 9), 305));
+            inventBox.Add(new Vector2(161 , 361));
+            inventBox.Add(new Vector2(161 + 52, 361));
+            inventBox.Add(new Vector2(161 + (52 * 2), 361));
+            inventBox.Add(new Vector2(161 + (52 * 3), 361));
+            inventBox.Add(new Vector2(161 + (52 * 4), 361));
+            inventBox.Add(new Vector2(161 + (52 * 5), 361));
+            inventBox.Add(new Vector2(161 + (52 * 6), 361));
+            inventBox.Add(new Vector2(161 + (52 * 7), 361));
+            inventBox.Add(new Vector2(161 + (52 * 8), 361));
+            inventBox.Add(new Vector2(161 + (52 * 9), 361));
             inventBox.Add(new Vector2(161, 430));
             inventBox.Add(new Vector2(161 + 52, 430));
             inventBox.Add(new Vector2(161 + (52 * 2), 430));
@@ -176,21 +177,27 @@ namespace LETHIMCOOK
             CandyScreen = new CandyScreen(this, new EventHandler(GameplayScreenEvent));
             SeaScreen = new SeaScreen(this, new EventHandler(GameplayScreenEvent));
             GameplayScreen = new GameplayScreen(this, new EventHandler(GameplayScreenEvent));
-            mCurrentScreen = RestauarntScreen;
+            mCurrentScreen = TitleScreen;
             currentHeart = CandyScreen.uiHeart.Width - 10;
         }
         public RectangleF bookRec;
         public RectangleF mouseRec;
         public RectangleF XboxQ;
-        public RectangleF xBox;
+        public static RectangleF xBox = new Rectangle(650, 75, 30, 30);
         bool OnCursor1;
+        bool onMenu = false;
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-           Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
             UpDateUI();
             mCurrentScreen.Update(gameTime);
+            if(mCurrentScreen == TitleScreen)
+            {
+                onMenu = true;
+            }
+            else
+            {
+                onMenu = false;
+            }
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
@@ -200,7 +207,10 @@ namespace LETHIMCOOK
             mCurrentScreen.Draw(_spriteBatch);
             _spriteBatch.End();
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            DrawUiGameplay(_spriteBatch);
+            if (!onMenu)
+            {
+                DrawUiGameplay(_spriteBatch);
+            }
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -224,7 +234,7 @@ namespace LETHIMCOOK
         }
         bool OncursorXBOX = false;
         bool OncursorxboxQ = false;
-        bool closeXBox = false;
+        public static bool closeXBox = false;
         bool closeXBoxQuest = false;
         public bool ShowInventory = false;
         public static bool IsPopUp = false;
@@ -337,7 +347,6 @@ namespace LETHIMCOOK
             bagRec = new Rectangle(750, 25, 25, 20);
             bookRec = new RectangleF(755, 100, 25, 15);
             questboxRec = new Rectangle(750, 150, 25, 20);//680, 30
-            xBox = new Rectangle(650, 75, 30, 30);
             XboxQ = new Rectangle(680, 30, 30, 30);
             if (mouseRec.Intersects(bookRec) && ms.LeftButton == ButtonState.Pressed)
             {
@@ -378,6 +387,11 @@ namespace LETHIMCOOK
             if (mouseRec.Intersects(XboxQ) && ms.LeftButton == ButtonState.Pressed)
             {
                 closeXBoxQuest = true;
+                GameplayScreen
+                    
+                    
+                    
+                    .openQuest = false;
                 closeXBox = false;
                 openbookUI = false;
                 ShowInventory = false;
@@ -421,15 +435,15 @@ namespace LETHIMCOOK
                     {
                         _spriteBatch.Draw(popup, new Vector2(635, 170), Color.White);
                         _spriteBatch.Draw(BagList[i].foodTexBag, new Rectangle(653, 180, 32,32), new Rectangle(0,0,32,32), Color.White);
-                        //if(BagList[i].Two == true)
-                        //{
-                        //    _spriteBatch.Draw(BagList[i].foodTexBag2, new Rectangle(653 + 40, 180, 32, 32), new Rectangle(0, 0, 32, 32), Color.White);
-                        //}
+                        if(BagList[i].Two == true && i - 1 >= 0 && BagList[i - 1] == BagList[i])
+                        {
+                            _spriteBatch.Draw(BagList[i].foodTexBag2, new Rectangle(653 + 40, 180, 32, 32), new Rectangle(0, 0, 32, 32), Color.White);
+                        }
                     }
                     CountTime(300);
                 }
             }
-            if (openQuestUI == true)
+            if (openQuestUI == true || GameplayScreen.openQuest)
             {
                 _spriteBatch.Draw(QuestUI, new Vector2(0, 0), new Rectangle(0, 0, 700, 400), Color.White);
                 if (closeXBox == false)
@@ -463,10 +477,6 @@ namespace LETHIMCOOK
                 for (int i = 0; i < BagList.Count; i++)
                 {
                     _spriteBatch.Draw(BagList[i].foodTexBag, new Vector2( inventBox[i].X-7, inventBox[i].Y-93), new Rectangle(0, 0, 32, 32), Color.White);
-                    //if(BagList[i].Two == true)
-                    //{
-                    //    _spriteBatch.Draw(BagList[i].foodTexBag2, new Vector2(inventBox[i].X - 7 + 40, inventBox[i].Y - 93), new Rectangle(0, 0, 32, 32), Color.White);
-                    //}
                 }
                 if (closeXBox == false)
                 {
